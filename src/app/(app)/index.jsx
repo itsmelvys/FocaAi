@@ -7,6 +7,7 @@ import { HomeHeader } from '@/components/home/home-header';
 import { HomeLandscape } from '@/components/home/home-landscape';
 import { TaskRow } from '@/components/home/task-row';
 import { BrandColors } from '@/constants/brand';
+import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 const INITIAL_TASKS = [
   {
@@ -47,12 +48,12 @@ const WEEK_BASE_DONE = 3;
 function formatCardDate() {
   const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
   const now = new Date();
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${day} ${months[now.getMonth()]}`;
+  return `${String(now.getDate()).padStart(2, '0')} ${months[now.getMonth()]}`;
 }
 
 export default function HomeScreen() {
   const router = useRouter();
+  const padding = useScreenPadding();
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [toast, setToast] = useState('');
 
@@ -79,7 +80,14 @@ export default function HomeScreen() {
       <HomeHeader onBellPress={() => showToast('Nenhuma notificação por enquanto')} />
 
       <ScrollView
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingLeft: padding.left,
+            paddingRight: padding.right,
+            paddingBottom: 20,
+          },
+        ]}
         showsVerticalScrollIndicator={false}
         bounces>
         <View style={styles.card}>
@@ -90,11 +98,17 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          {tasks.map((task) => (
-            <TaskRow key={task.id} task={task} onToggle={toggleTask} />
+          {tasks.map((task, index) => (
+            <TaskRow
+              key={task.id}
+              task={task}
+              onToggle={toggleTask}
+              isLast={index === tasks.length - 1}
+            />
           ))}
 
           <Pressable
+            accessibilityRole="button"
             onPress={() => router.push('/(app)/planner')}
             style={({ pressed }) => [styles.weekButton, pressed && styles.pressed]}>
             <Text style={styles.weekButtonText}>Ver planejamento da semana</Text>
@@ -106,24 +120,25 @@ export default function HomeScreen() {
           </Pressable>
         </View>
 
-        <HomeLandscape />
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Progresso da semana</Text>
-          <View style={styles.progressTrack}>
-            <View style={[styles.progressFill, { width: `${percent}%` }]} />
-          </View>
-          <View style={styles.progressRow}>
-            <Text style={styles.progressLabel}>
-              {weekDone} de {WEEK_TOTAL} tarefas concluídas
-            </Text>
-            <Text style={styles.progressPercent}>{percent}%</Text>
+        <View style={styles.progressBlock}>
+          <HomeLandscape />
+          <View style={[styles.card, styles.progressCard]}>
+            <Text style={styles.cardTitle}>Progresso da semana</Text>
+            <View style={styles.progressTrack}>
+              <View style={[styles.progressFill, { width: `${percent}%` }]} />
+            </View>
+            <View style={styles.progressRow}>
+              <Text style={styles.progressLabel}>
+                {weekDone} de {WEEK_TOTAL} tarefas concluídas
+              </Text>
+              <Text style={styles.progressPercent}>{percent}%</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
 
       {toast ? (
-        <View style={styles.toast}>
+        <View style={[styles.toast, { left: padding.left, right: padding.right, bottom: 16 }]}>
           <Text style={styles.toastText}>{toast}</Text>
         </View>
       ) : null}
@@ -137,13 +152,11 @@ const styles = StyleSheet.create({
     backgroundColor: BrandColors.cream,
   },
   content: {
-    paddingHorizontal: 18,
-    paddingBottom: 24,
-    gap: 12,
+    gap: 4,
   },
   card: {
     backgroundColor: BrandColors.white,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 16,
     shadowColor: BrandColors.navy,
     shadowOpacity: 0.08,
@@ -155,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   cardTitle: {
     fontSize: 18,
@@ -175,7 +188,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.4,
   },
   weekButton: {
-    marginTop: 8,
+    marginTop: 10,
     backgroundColor: BrandColors.creamButton,
     borderRadius: 14,
     minHeight: 48,
@@ -191,6 +204,12 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.8,
+  },
+  progressBlock: {
+    marginTop: 8,
+  },
+  progressCard: {
+    marginTop: -42,
   },
   progressTrack: {
     marginTop: 14,
@@ -221,9 +240,6 @@ const styles = StyleSheet.create({
   },
   toast: {
     position: 'absolute',
-    left: 24,
-    right: 24,
-    bottom: 16,
     backgroundColor: BrandColors.navy,
     borderRadius: 12,
     paddingVertical: 12,

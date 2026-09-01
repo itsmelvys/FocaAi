@@ -1,29 +1,45 @@
+import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
+import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 export function HomeHeader({ onBellPress }) {
-  const insets = useSafeAreaInsets();
+  const padding = useScreenPadding();
+  const router = useRouter();
   const { user } = useAuth();
   const firstName = user?.name?.split(' ')[0] || 'Letícia';
 
   return (
-    <View style={[styles.wrap, { paddingTop: insets.top + 8 }]}>
-      <View style={styles.sun} />
-      <View style={styles.cloud} />
+    <View
+      style={[
+        styles.wrap,
+        {
+          paddingTop: padding.top,
+          paddingLeft: padding.left,
+          paddingRight: padding.right,
+        },
+      ]}>
+      <View style={[styles.sun, { top: padding.insets.top }]} />
+      <View style={[styles.sunInner, { top: padding.insets.top + 14 }]} />
+      <View style={[styles.cloudBack, { top: padding.insets.top + 18 }]} />
+      <View style={[styles.cloudFront, { top: padding.insets.top + 30 }]} />
 
       <View style={styles.row}>
-        <View style={styles.texts}>
+        <Pressable
+          onPress={() => router.navigate('/(app)/perfil')}
+          style={({ pressed }) => [styles.texts, pressed && styles.pressed]}>
           <Text style={styles.hello}>Olá, {firstName}! 👋</Text>
           <Text style={styles.subtitle}>Vamos focar hoje?</Text>
-        </View>
+        </Pressable>
 
         <Pressable
           onPress={onBellPress}
           hitSlop={10}
+          accessibilityRole="button"
+          accessibilityLabel="Notificações"
           style={({ pressed }) => [styles.bell, pressed && styles.pressed]}>
           <SymbolView
             name={{ ios: 'bell', android: 'notifications', web: 'notifications' }}
@@ -38,32 +54,48 @@ export function HomeHeader({ onBellPress }) {
 
 const styles = StyleSheet.create({
   wrap: {
-    paddingHorizontal: 22,
-    paddingBottom: 8,
+    paddingBottom: 12,
+    overflow: 'hidden',
   },
   sun: {
     position: 'absolute',
-    top: 8,
-    right: 72,
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    right: 48,
+    width: 78,
+    height: 78,
+    borderRadius: 39,
     backgroundColor: BrandColors.hillSoft,
-    opacity: 0.85,
   },
-  cloud: {
+  sunInner: {
     position: 'absolute',
-    top: 28,
-    right: 108,
-    width: 46,
+    right: 62,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: BrandColors.cream,
+    opacity: 0.35,
+  },
+  cloudBack: {
+    position: 'absolute',
+    right: 112,
+    width: 52,
     height: 22,
     borderRadius: 12,
     backgroundColor: BrandColors.cloud,
+  },
+  cloudFront: {
+    position: 'absolute',
+    right: 90,
+    width: 36,
+    height: 16,
+    borderRadius: 10,
+    backgroundColor: BrandColors.cloud,
+    opacity: 0.8,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+    zIndex: 1,
   },
   texts: {
     flex: 1,
@@ -82,12 +114,13 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   bell: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
   },
   pressed: {
-    opacity: 0.6,
+    opacity: 0.65,
   },
 });

@@ -1,7 +1,15 @@
 import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
@@ -73,6 +81,7 @@ export function LoginForm() {
       return;
     }
 
+    Keyboard.dismiss();
     setLoading(true);
     signIn({ email, name });
     router.replace('/(app)');

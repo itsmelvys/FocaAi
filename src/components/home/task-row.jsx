@@ -3,11 +3,13 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
 
-export function TaskRow({ task, onToggle }) {
+export function TaskRow({ task, onToggle, isLast }) {
   return (
     <Pressable
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: task.done }}
       onPress={() => onToggle(task.id)}
-      style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+      style={({ pressed }) => [styles.row, !isLast && styles.rowBorder, pressed && styles.pressed]}>
       <View style={[styles.iconBox, { backgroundColor: task.soft }]}>
         <SymbolView name={task.icon} size={18} tintColor={task.color} />
       </View>
@@ -18,7 +20,11 @@ export function TaskRow({ task, onToggle }) {
         <Text style={[styles.meta, { color: task.color }]}>{task.meta}</Text>
       </View>
 
-      <View style={[styles.checkbox, task.done && { backgroundColor: task.color, borderColor: task.color }]}>
+      <View
+        style={[
+          styles.checkbox,
+          task.done && { backgroundColor: task.color, borderColor: task.color },
+        ]}>
         {task.done ? (
           <SymbolView
             name={{ ios: 'checkmark', android: 'check', web: 'check' }}
@@ -36,7 +42,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    paddingVertical: 10,
+    paddingVertical: 12,
+  },
+  rowBorder: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E8E4DC',
   },
   pressed: {
     opacity: 0.75,

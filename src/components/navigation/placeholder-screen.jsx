@@ -1,10 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
+import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 export function PlaceholderScreen({ title, description }) {
+  const padding = useScreenPadding();
+
   return (
-    <View style={styles.screen}>
+    <View
+      style={[
+        styles.screen,
+        {
+          paddingTop: padding.top,
+          paddingLeft: padding.left,
+          paddingRight: padding.right,
+          paddingBottom: padding.bottom,
+        },
+      ]}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
     </View>
@@ -17,7 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: BrandColors.cream,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 32,
   },
   title: {
     fontSize: 24,

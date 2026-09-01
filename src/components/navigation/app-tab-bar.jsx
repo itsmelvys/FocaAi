@@ -1,8 +1,9 @@
 import { SymbolView } from 'expo-symbols';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BrandColors } from '@/constants/brand';
+import { Layout } from '@/constants/layout';
+import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 const TABS = [
   {
@@ -33,10 +34,19 @@ const TABS = [
 ];
 
 export function AppTabBar({ state, navigation }) {
-  const insets = useSafeAreaInsets();
+  const padding = useScreenPadding();
 
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+    <View
+      style={[
+        styles.bar,
+        {
+          paddingTop: Layout.tabBarTop,
+          paddingBottom: padding.bottom,
+          paddingLeft: padding.insets.left + 8,
+          paddingRight: padding.insets.right + 8,
+        },
+      ]}>
       {state.routes.map((route, index) => {
         const tab = TABS.find((item) => item.name === route.name);
         if (!tab) {
@@ -82,12 +92,12 @@ const styles = StyleSheet.create({
     backgroundColor: BrandColors.white,
     borderTopWidth: 1,
     borderTopColor: '#F0EBE3',
-    paddingTop: 8,
-    paddingHorizontal: 6,
   },
   item: {
     flex: 1,
+    minHeight: Layout.tabItemMinHeight,
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 4,
   },
   label: {

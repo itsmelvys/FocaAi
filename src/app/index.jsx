@@ -3,16 +3,17 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BrandLogo } from '@/components/brand/brand-logo';
 import { IntroLandscape } from '@/components/intro/intro-landscape';
 import { BrandColors } from '@/constants/brand';
+import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 const INTRO_DURATION_MS = 2600;
 
 export default function IntroScreen() {
   const router = useRouter();
+  const padding = useScreenPadding();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,29 +24,31 @@ export default function IntroScreen() {
   }, [router]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.screen}>
       <StatusBar style="dark" />
-      <View style={styles.screen}>
-        <Animated.View entering={FadeIn.duration(700)} style={styles.content}>
-          <BrandLogo size="large" />
-          <Animated.View entering={FadeInDown.delay(250).duration(600)}>
-            <Text style={styles.tagline}>
-              Organize seus estudos.{'\n'}Construa seu futuro.
-            </Text>
-          </Animated.View>
+      <Animated.View
+        entering={FadeIn.duration(700)}
+        style={[
+          styles.content,
+          {
+            paddingTop: padding.top + 24,
+            paddingHorizontal: padding.left,
+          },
+        ]}>
+        <BrandLogo size="large" />
+        <Animated.View entering={FadeInDown.delay(250).duration(600)}>
+          <Text style={styles.tagline}>
+            Organize seus estudos.{'\n'}Construa seu futuro.
+          </Text>
         </Animated.View>
+      </Animated.View>
 
-        <IntroLandscape />
-      </View>
-    </SafeAreaView>
+      <IntroLandscape />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
   screen: {
     flex: 1,
     backgroundColor: BrandColors.cream,
@@ -54,8 +57,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 72,
-    paddingHorizontal: 24,
     zIndex: 1,
   },
   tagline: {

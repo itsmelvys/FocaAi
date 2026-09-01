@@ -1,14 +1,16 @@
 import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
+import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 export default function PerfilScreen() {
-  const insets = useSafeAreaInsets();
+  const padding = useScreenPadding();
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const name = user?.name || 'Letícia';
+  const email = user?.email || 'leticia@focaai.app';
 
   function handleLogout() {
     signOut();
@@ -16,26 +18,53 @@ export default function PerfilScreen() {
   }
 
   return (
-    <View style={[styles.screen, { paddingTop: insets.top + 24 }]}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={[
+        styles.content,
+        {
+          paddingTop: padding.top,
+          paddingLeft: padding.left,
+          paddingRight: padding.right,
+          paddingBottom: 24,
+        },
+      ]}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.avatar}>
-        <Text style={styles.avatarLetter}>{(user?.name || 'L').charAt(0)}</Text>
+        <Text style={styles.avatarLetter}>{name.charAt(0).toUpperCase()}</Text>
       </View>
-      <Text style={styles.name}>{user?.name || 'Letícia'}</Text>
-      <Text style={styles.email}>{user?.email || 'leticia@focaai.app'}</Text>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.email}>{email}</Text>
 
       <View style={styles.card}>
-        <Text style={styles.cardLabel}>Conta de teste</Text>
+        <Text style={styles.cardLabel}>Seu espaço</Text>
         <Text style={styles.cardText}>
-          Ainda não há backend. Este perfil existe só no front para você navegar pelo app.
+          Perfil de demonstração. Sem banco de dados ainda — os dados ficam só nesta sessão do app.
         </Text>
       </View>
 
+      <View style={styles.statsRow}>
+        <View style={styles.stat}>
+          <Text style={styles.statValue}>3</Text>
+          <Text style={styles.statLabel}>concluídas</Text>
+        </View>
+        <View style={styles.stat}>
+          <Text style={styles.statValue}>7</Text>
+          <Text style={styles.statLabel}>na semana</Text>
+        </View>
+        <View style={styles.stat}>
+          <Text style={styles.statValue}>43%</Text>
+          <Text style={styles.statLabel}>foco</Text>
+        </View>
+      </View>
+
       <Pressable
+        accessibilityRole="button"
         onPress={handleLogout}
         style={({ pressed }) => [styles.logout, pressed && styles.pressed]}>
         <Text style={styles.logoutText}>Sair</Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -43,8 +72,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: BrandColors.cream,
+  },
+  content: {
     alignItems: 'center',
-    paddingHorizontal: 24,
   },
   avatar: {
     width: 84,
@@ -74,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 28,
     width: '100%',
     backgroundColor: BrandColors.white,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 16,
   },
   cardLabel: {
@@ -87,6 +117,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: BrandColors.navy,
+  },
+  statsRow: {
+    marginTop: 16,
+    width: '100%',
+    flexDirection: 'row',
+    gap: 10,
+  },
+  stat: {
+    flex: 1,
+    backgroundColor: BrandColors.white,
+    borderRadius: 16,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  statValue: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: BrandColors.navy,
+  },
+  statLabel: {
+    marginTop: 4,
+    fontSize: 11,
+    color: BrandColors.textMuted,
   },
   logout: {
     marginTop: 24,
@@ -105,5 +158,6 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.8,
+    transform: [{ scale: 0.98 }],
   },
 });
