@@ -6,7 +6,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { OnboardingScene } from '@/components/onboarding/onboarding-scene';
 import { BrandColors } from '@/constants/brand';
-import { useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 
 const STEPS = [
@@ -26,19 +25,17 @@ const STEPS = [
 
 export default function OnboardingScreen() {
   const router = useRouter();
-  const { signIn } = useAuth();
   const padding = useScreenPadding();
   const [step, setStep] = useState(0);
   const isLast = step === STEPS.length - 1;
 
-  function enterHome() {
-    signIn({ name: 'Letícia' });
-    router.replace('/(app)');
+  function goToLogin() {
+    router.replace('/login');
   }
 
   function handleNext() {
     if (isLast) {
-      enterHome();
+      goToLogin();
       return;
     }
     setStep((current) => current + 1);
@@ -66,7 +63,7 @@ export default function OnboardingScreen() {
             />
           ))}
         </View>
-        <Pressable onPress={enterHome} hitSlop={8} style={({ pressed }) => pressed && styles.pressed}>
+        <Pressable onPress={goToLogin} hitSlop={8} style={({ pressed }) => pressed && styles.pressed}>
           <Text style={styles.skip}>Pular</Text>
         </Pressable>
       </View>
@@ -82,7 +79,7 @@ export default function OnboardingScreen() {
           accessibilityRole="button"
           onPress={handleNext}
           style={({ pressed }) => [styles.nextButton, pressed && styles.pressed]}>
-          <Text style={styles.nextText}>{isLast ? 'Começar' : 'Próximo'}</Text>
+          <Text style={styles.nextText}>{isLast ? 'Entrar' : 'Próximo'}</Text>
           <SymbolView
             name={{ ios: 'arrow.right', android: 'arrow_forward', web: 'arrow_forward' }}
             size={18}
