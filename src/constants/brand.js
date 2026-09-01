@@ -30,6 +30,10 @@ export const BrandColors = {
   historySoft: '#FDECDC',
   portuguese: '#7B61FF',
   portugueseSoft: '#EEE9FF',
+  geography: '#3B82F6',
+  geographySoft: '#E8F1FE',
+  english: '#4338CA',
+  englishSoft: '#E8E7F8',
   progressTrack: '#E8E4DC',
   creamButton: '#F7EFE3',
 };

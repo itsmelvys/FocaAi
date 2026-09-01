@@ -14,7 +14,7 @@ export default function PerfilScreen() {
 
   function handleLogout() {
     signOut();
-    router.replace('/login');
+    router.replace('/onboarding');
   }
 
   return (

@@ -9,16 +9,16 @@ import { IntroLandscape } from '@/components/intro/intro-landscape';
 import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 
-const INTRO_DURATION_MS = 2600;
+const SPLASH_DURATION_MS = 2600;
 
-export default function IntroScreen() {
+export default function SplashScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace('/login');
-    }, INTRO_DURATION_MS);
+      router.replace('/onboarding');
+    }, SPLASH_DURATION_MS);
 
     return () => clearTimeout(timer);
   }, [router]);
@@ -26,6 +26,8 @@ export default function IntroScreen() {
   return (
     <View style={styles.screen}>
       <StatusBar style="dark" />
+      <View style={styles.sun} />
+
       <Animated.View
         entering={FadeIn.duration(700)}
         style={[
@@ -53,6 +55,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: BrandColors.cream,
     overflow: 'hidden',
+  },
+  sun: {
+    position: 'absolute',
+    top: -36,
+    right: -28,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    backgroundColor: BrandColors.orangeLight,
+    opacity: 0.35,
   },
   content: {
     flex: 1,

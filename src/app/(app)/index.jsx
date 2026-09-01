@@ -7,40 +7,8 @@ import { HomeHeader } from '@/components/home/home-header';
 import { HomeLandscape } from '@/components/home/home-landscape';
 import { TaskRow } from '@/components/home/task-row';
 import { BrandColors } from '@/constants/brand';
+import { HOME_DAY_TASKS } from '@/constants/mock-tasks';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
-
-const INITIAL_TASKS = [
-  {
-    id: 'math',
-    title: 'Matemática',
-    subtitle: 'Lista de exercícios',
-    meta: 'Entrega hoje',
-    color: BrandColors.math,
-    soft: BrandColors.mathSoft,
-    icon: { ios: 'plus.forwardslash.minus', android: 'calculate', web: 'calculate' },
-    done: false,
-  },
-  {
-    id: 'history',
-    title: 'História',
-    subtitle: 'Prova sobre Brasil República',
-    meta: '04/06',
-    color: BrandColors.history,
-    soft: BrandColors.historySoft,
-    icon: { ios: 'doc.text', android: 'description', web: 'description' },
-    done: false,
-  },
-  {
-    id: 'portuguese',
-    title: 'Português',
-    subtitle: 'Leitura e resumo',
-    meta: '30/05',
-    color: BrandColors.portuguese,
-    soft: BrandColors.portugueseSoft,
-    icon: { ios: 'book', android: 'menu_book', web: 'menu_book' },
-    done: false,
-  },
-];
 
 const WEEK_TOTAL = 7;
 const WEEK_BASE_DONE = 3;
@@ -54,7 +22,7 @@ function formatCardDate() {
 export default function HomeScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
-  const [tasks, setTasks] = useState(INITIAL_TASKS);
+  const [tasks, setTasks] = useState(HOME_DAY_TASKS);
   const [toast, setToast] = useState('');
 
   const weekDone = useMemo(() => {
