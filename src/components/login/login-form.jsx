@@ -141,7 +141,10 @@ export function LoginForm() {
         <Text style={styles.googleButtonText}>Entrar com Google</Text>
       </Pressable>
 
-      <Pressable onPress={() => enterApp({ name: 'Letícia' })} disabled={loading}>
+      <Pressable
+        accessibilityRole="button"
+        disabled={loading}
+        onPress={() => router.push('/cadastro')}>
         <Text style={styles.signUpText}>
           Ainda não tem uma conta? <Text style={styles.signUpLink}>Cadastre-se</Text>
         </Text>

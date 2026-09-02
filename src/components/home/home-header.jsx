@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { BackButton } from '@/components/navigation/back-button';
 
 export function HomeHeader({ onBellPress }) {
   const padding = useScreenPadding();
@@ -26,6 +27,8 @@ export function HomeHeader({ onBellPress }) {
       <View style={[styles.sunInner, { top: padding.insets.top + 14 }]} />
       <View style={[styles.cloudBack, { top: padding.insets.top + 18 }]} />
       <View style={[styles.cloudFront, { top: padding.insets.top + 30 }]} />
+
+      <BackButton onPress={() => router.replace('/login')} />
 
       <View style={styles.row}>
         <Pressable
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
   wrap: {
     paddingBottom: 12,
     overflow: 'hidden',
+    gap: 8,
   },
   sun: {
     position: 'absolute',

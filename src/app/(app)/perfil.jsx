@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { BackButton } from '@/components/navigation/back-button';
 import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
@@ -30,6 +31,9 @@ export default function PerfilScreen() {
         },
       ]}
       showsVerticalScrollIndicator={false}>
+      <View style={styles.backRow}>
+        <BackButton onPress={() => router.navigate('/(app)')} />
+      </View>
       <View style={styles.avatar}>
         <Text style={styles.avatarLetter}>{name.charAt(0).toUpperCase()}</Text>
       </View>
@@ -75,6 +79,10 @@ const styles = StyleSheet.create({
   },
   content: {
     alignItems: 'center',
+  },
+  backRow: {
+    width: '100%',
+    marginBottom: 16,
   },
   avatar: {
     width: 84,

@@ -1,7 +1,9 @@
 import { SymbolView } from 'expo-symbols';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 
+import { BackButton } from '@/components/navigation/back-button';
 import { TaskCard } from '@/components/tarefas/task-card';
 import { BrandColors } from '@/constants/brand';
 import { MY_TASKS } from '@/constants/mock-tasks';
@@ -14,6 +16,7 @@ const FILTERS = [
 ];
 
 export default function TarefasScreen() {
+  const router = useRouter();
   const padding = useScreenPadding();
   const [tasks, setTasks] = useState(MY_TASKS);
   const [filter, setFilter] = useState('all');
@@ -51,18 +54,21 @@ export default function TarefasScreen() {
             paddingRight: padding.right,
           },
         ]}>
-        <Text style={styles.title}>Minhas tarefas</Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Nova tarefa"
-          onPress={showNewTaskHint}
-          style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}>
-          <SymbolView
-            name={{ ios: 'plus', android: 'add', web: 'add' }}
-            size={22}
-            tintColor={BrandColors.white}
-          />
-        </Pressable>
+        <BackButton onPress={() => router.navigate('/(app)')} />
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>Minhas tarefas</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Nova tarefa"
+            onPress={showNewTaskHint}
+            style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}>
+            <SymbolView
+              name={{ ios: 'plus', android: 'add', web: 'add' }}
+              size={22}
+              tintColor={BrandColors.white}
+            />
+          </Pressable>
+        </View>
       </View>
 
       <View style={[styles.filters, { paddingLeft: padding.left, paddingRight: padding.right }]}>
@@ -107,10 +113,13 @@ const styles = StyleSheet.create({
     backgroundColor: BrandColors.cream,
   },
   header: {
+    paddingBottom: 12,
+    gap: 4,
+  },
+  titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 12,
   },
   title: {
     fontSize: 28,

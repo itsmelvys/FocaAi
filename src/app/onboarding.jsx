@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { OnboardingScene } from '@/components/onboarding/onboarding-scene';
+import { BackButton } from '@/components/navigation/back-button';
 import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 
@@ -33,6 +34,14 @@ export default function OnboardingScreen() {
     router.replace('/login');
   }
 
+  function handleBack() {
+    if (step === 0) {
+      router.replace('/');
+      return;
+    }
+    setStep((current) => current - 1);
+  }
+
   function handleNext() {
     if (isLast) {
       goToLogin();
@@ -55,6 +64,7 @@ export default function OnboardingScreen() {
             paddingRight: padding.right,
           },
         ]}>
+        <BackButton onPress={handleBack} />
         <View style={styles.progressRow}>
           {STEPS.map((item, index) => (
             <View
