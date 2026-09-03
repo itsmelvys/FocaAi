@@ -1,5 +1,13 @@
 import { BrandColors } from '@/constants/brand';
 
+export const SUBJECTS = [
+  { name: 'Matemática', color: BrandColors.math },
+  { name: 'História', color: BrandColors.history },
+  { name: 'Português', color: BrandColors.portuguese },
+  { name: 'Geografia', color: BrandColors.geography },
+  { name: 'Inglês', color: BrandColors.english },
+];
+
 export const HOME_DAY_TASKS = [
   {
     id: 'math',

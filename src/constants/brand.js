@@ -36,4 +36,10 @@ export const BrandColors = {
   englishSoft: '#E8E7F8',
   progressTrack: '#E8E4DC',
   creamButton: '#F7EFE3',
+  priorityLowBg: '#E7F6EC',
+  priorityLow: '#2F7A3E',
+  priorityMidBg: '#FDECDC',
+  priorityMid: '#D97706',
+  priorityHighBg: '#FDE8E8',
+  priorityHigh: '#B42318',
 };

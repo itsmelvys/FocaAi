@@ -6,8 +6,8 @@ import { useRouter } from 'expo-router';
 import { BackButton } from '@/components/navigation/back-button';
 import { TaskCard } from '@/components/tarefas/task-card';
 import { BrandColors } from '@/constants/brand';
-import { MY_TASKS } from '@/constants/mock-tasks';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useTasks } from '@/hooks/use-tasks';
 
 const FILTERS = [
   { id: 'all', label: 'Todas' },
@@ -18,9 +18,8 @@ const FILTERS = [
 export default function TarefasScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
-  const [tasks, setTasks] = useState(MY_TASKS);
+  const { tasks, toggleTask } = useTasks();
   const [filter, setFilter] = useState('all');
-  const [toast, setToast] = useState('');
 
   const visibleTasks = useMemo(() => {
     if (filter === 'pending') {
@@ -31,17 +30,6 @@ export default function TarefasScreen() {
     }
     return tasks;
   }, [filter, tasks]);
-
-  function toggleTask(id) {
-    setTasks((current) =>
-      current.map((task) => (task.id === id ? { ...task, done: !task.done } : task)),
-    );
-  }
-
-  function showNewTaskHint() {
-    setToast('Nova tarefa entra na próxima tela');
-    setTimeout(() => setToast(''), 1800);
-  }
 
   return (
     <View style={styles.screen}>
@@ -60,7 +48,7 @@ export default function TarefasScreen() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Nova tarefa"
-            onPress={showNewTaskHint}
+            onPress={() => router.push('/(app)/nova-tarefa')}
             style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}>
             <SymbolView
               name={{ ios: 'plus', android: 'add', web: 'add' }}
@@ -97,12 +85,6 @@ export default function TarefasScreen() {
           <TaskCard key={task.id} task={task} onToggle={toggleTask} />
         ))}
       </ScrollView>
-
-      {toast ? (
-        <View style={[styles.toast, { left: padding.left, right: padding.right }]}>
-          <Text style={styles.toastText}>{toast}</Text>
-        </View>
-      ) : null}
     </View>
   );
 }
@@ -158,19 +140,5 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.8,
-  },
-  toast: {
-    position: 'absolute',
-    bottom: 16,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  toastText: {
-    color: BrandColors.white,
-    textAlign: 'center',
-    fontSize: 13,
-    fontWeight: '600',
   },
 });
