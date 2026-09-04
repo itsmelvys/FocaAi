@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -80,7 +80,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/(app)/planner')}
             style={({ pressed }) => [styles.weekButton, pressed && styles.pressed]}>
             <Text style={styles.weekButtonText}>Ver planejamento da semana</Text>
-            <SymbolView
+            <AppIcon
               name={{ ios: 'chevron.right', android: 'chevron_right', web: 'chevron_right' }}
               size={16}
               tintColor={BrandColors.navy}

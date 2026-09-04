@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
@@ -28,7 +28,7 @@ export function BackButton({ onPress, label = 'Voltar' }) {
       hitSlop={8}
       onPress={handlePress}
       style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
-      <SymbolView
+      <AppIcon
         name={{ ios: 'chevron.left', android: 'chevron_left', web: 'chevron_left' }}
         size={18}
         tintColor={BrandColors.navy}

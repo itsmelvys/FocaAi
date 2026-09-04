@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
@@ -44,7 +44,7 @@ export function HomeHeader({ onBellPress }) {
           accessibilityRole="button"
           accessibilityLabel="Notificações"
           style={({ pressed }) => [styles.bell, pressed && styles.pressed]}>
-          <SymbolView
+          <AppIcon
             name={{ ios: 'bell', android: 'notifications', web: 'notifications' }}
             size={22}
             tintColor={BrandColors.navy}

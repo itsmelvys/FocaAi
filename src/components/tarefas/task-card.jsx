@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
@@ -25,7 +25,7 @@ export function TaskCard({ task, onToggle }) {
           task.done && { backgroundColor: BrandColors.navy, borderColor: BrandColors.navy },
         ]}>
         {task.done ? (
-          <SymbolView
+          <AppIcon
             name={{ ios: 'checkmark', android: 'check', web: 'check' }}
             size={12}
             tintColor={BrandColors.white}

@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
 import {
   Keyboard,
@@ -80,7 +80,7 @@ export function NovaTarefaForm() {
         <Text style={[styles.fieldText, !subject && styles.placeholder]}>
           {subject ? subject.name : 'Selecione a matéria'}
         </Text>
-        <SymbolView
+        <AppIcon
           name={{ ios: 'chevron.down', android: 'expand_more', web: 'expand_more' }}
           size={18}
           tintColor={BrandColors.navy}
@@ -113,7 +113,7 @@ export function NovaTarefaForm() {
 
       <Text style={styles.label}>Data de entrega</Text>
       <Pressable onPress={() => setDateOpen(true)} style={styles.field}>
-        <SymbolView
+        <AppIcon
           name={{ ios: 'calendar', android: 'calendar_month', web: 'calendar_month' }}
           size={18}
           tintColor={BrandColors.navy}

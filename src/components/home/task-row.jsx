@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
@@ -11,7 +11,7 @@ export function TaskRow({ task, onToggle, isLast }) {
       onPress={() => onToggle(task.id)}
       style={({ pressed }) => [styles.row, !isLast && styles.rowBorder, pressed && styles.pressed]}>
       <View style={[styles.iconBox, { backgroundColor: task.soft }]}>
-        <SymbolView name={task.icon} size={18} tintColor={task.color} />
+        <AppIcon name={task.icon} size={18} tintColor={task.color} />
       </View>
 
       <View style={styles.texts}>
@@ -26,7 +26,7 @@ export function TaskRow({ task, onToggle, isLast }) {
           task.done && { backgroundColor: task.color, borderColor: task.color },
         ]}>
         {task.done ? (
-          <SymbolView
+          <AppIcon
             name={{ ios: 'checkmark', android: 'check', web: 'check' }}
             size={12}
             tintColor={BrandColors.white}

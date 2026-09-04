@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -90,7 +90,7 @@ export default function OnboardingScreen() {
           onPress={handleNext}
           style={({ pressed }) => [styles.nextButton, pressed && styles.pressed]}>
           <Text style={styles.nextText}>{isLast ? 'Entrar' : 'Próximo'}</Text>
-          <SymbolView
+          <AppIcon
             name={{ ios: 'arrow.right', android: 'arrow_forward', web: 'arrow_forward' }}
             size={18}
             tintColor={BrandColors.white}

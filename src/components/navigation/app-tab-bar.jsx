@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BrandColors } from '@/constants/brand';
@@ -72,7 +72,7 @@ export function AppTabBar({ state, navigation }) {
               }
             }}
             style={styles.item}>
-            <SymbolView
+            <AppIcon
               name={tab.icon}
               size={22}
               tintColor={focused ? BrandColors.navy : BrandColors.tabInactive}

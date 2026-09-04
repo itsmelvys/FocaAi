@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -26,7 +26,7 @@ function InputField({
 }) {
   return (
     <View style={styles.inputWrapper}>
-      <SymbolView name={icon} size={20} tintColor={BrandColors.navy} style={styles.inputIcon} />
+      <AppIcon name={icon} size={20} tintColor={BrandColors.navy} style={styles.inputIcon} />
       <TextInput
         style={styles.input}
         placeholder={placeholder}
@@ -39,7 +39,7 @@ function InputField({
       />
       {rightIcon ? (
         <Pressable onPress={onRightIconPress} hitSlop={8} style={styles.eyeButton}>
-          <SymbolView name={rightIcon} size={20} tintColor={BrandColors.navy} />
+          <AppIcon name={rightIcon} size={20} tintColor={BrandColors.navy} />
         </Pressable>
       ) : null}
     </View>

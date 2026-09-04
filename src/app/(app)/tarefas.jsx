@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -50,7 +50,7 @@ export default function TarefasScreen() {
             accessibilityLabel="Nova tarefa"
             onPress={() => router.push('/(app)/nova-tarefa')}
             style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}>
-            <SymbolView
+            <AppIcon
               name={{ ios: 'plus', android: 'add', web: 'add' }}
               size={22}
               tintColor={BrandColors.white}
