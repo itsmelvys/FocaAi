@@ -8,9 +8,9 @@ import { AddSubjectForm } from '@/components/materias/add-subject-form';
 import { SubjectCard } from '@/components/materias/subject-card';
 import { SubjectDetail } from '@/components/materias/subject-detail';
 import { BackButton } from '@/components/navigation/back-button';
-import { BrandColors } from '@/constants/brand';
 import { SUBJECTS } from '@/constants/mock-subjects';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const FILTERS = [
   { id: 'all', label: 'Todas' },
@@ -22,6 +22,8 @@ const FILTERS = [
 export default function MateriasScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
   const [subjects, setSubjects] = useState(SUBJECTS);
@@ -109,7 +111,7 @@ export default function MateriasScreen() {
             <AppIcon
               name={{ ios: 'plus', android: 'add', web: 'add' }}
               size={16}
-              tintColor={BrandColors.white}
+              tintColor={colors.white}
             />
             <Text style={styles.addText}>Adicionar{'\n'}matéria</Text>
           </Pressable>
@@ -128,13 +130,13 @@ export default function MateriasScreen() {
           <AppIcon
             name={{ ios: 'magnifyingglass', android: 'search', web: 'search' }}
             size={18}
-            tintColor={BrandColors.tabInactive}
+            tintColor={colors.tabInactive}
           />
           <TextInput
             value={query}
             onChangeText={setQuery}
             placeholder="Buscar matéria..."
-            placeholderTextColor={BrandColors.inputPlaceholder}
+            placeholderTextColor={colors.inputPlaceholder}
             style={styles.searchInput}
           />
         </View>
@@ -188,153 +190,155 @@ export default function MateriasScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  header: {
-    paddingBottom: 12,
-    overflow: 'hidden',
-  },
-  sun: {
-    position: 'absolute',
-    right: 20,
-    top: 8,
-    width: 88,
-    height: 88,
-    borderRadius: 44,
-    backgroundColor: BrandColors.sun,
-    opacity: 0.38,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  titleBlock: {
-    flex: 1,
-    zIndex: 1,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginTop: 6,
-    fontSize: 14,
-    lineHeight: 20,
-    color: BrandColors.textMuted,
-  },
-  addBtn: {
-    zIndex: 1,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 22,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 92,
-  },
-  addText: {
-    marginTop: 2,
-    color: BrandColors.white,
-    fontSize: 11,
-    fontWeight: '700',
-    textAlign: 'center',
-    lineHeight: 14,
-  },
-  search: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: BrandColors.white,
-    borderRadius: 24,
-    minHeight: 48,
-    paddingHorizontal: 14,
-    borderWidth: 1,
-    borderColor: '#EFEAE2',
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 15,
-    color: BrandColors.navy,
-    paddingVertical: 10,
-  },
-  filtersScroll: {
-    flexGrow: 0,
-    marginTop: 14,
-    marginBottom: 16,
-  },
-  filters: {
-    gap: 8,
-    paddingRight: 8,
-  },
-  pill: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: BrandColors.white,
-    borderWidth: 1,
-    borderColor: '#E5E0D8',
-  },
-  pillActive: {
-    backgroundColor: BrandColors.navy,
-    borderColor: BrandColors.navy,
-  },
-  pillText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: BrandColors.navy,
-  },
-  pillTextActive: {
-    color: BrandColors.white,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    rowGap: 12,
-  },
-  empty: {
-    marginTop: 24,
-    textAlign: 'center',
-    color: BrandColors.textMuted,
-  },
-  quote: {
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: '#F3E6D4',
-    borderRadius: 18,
-    paddingVertical: 14,
-    paddingHorizontal: 14,
-  },
-  quoteCactus: {
-    width: 16,
-    height: 28,
-    borderRadius: 8,
-    backgroundColor: BrandColors.green,
-  },
-  quoteText: {
-    flex: 1,
-    fontSize: 14,
-    fontWeight: '600',
-    fontStyle: 'italic',
-    color: BrandColors.navy,
-  },
-  quoteLine: {
-    width: 72,
-    height: 3,
-    borderRadius: 2,
-    backgroundColor: BrandColors.orange,
-    alignSelf: 'center',
-    marginTop: 8,
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    header: {
+      paddingBottom: 12,
+      overflow: 'hidden',
+    },
+    sun: {
+      position: 'absolute',
+      right: 20,
+      top: 8,
+      width: 88,
+      height: 88,
+      borderRadius: 44,
+      backgroundColor: c.sun,
+      opacity: 0.38,
+    },
+    titleRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    titleBlock: {
+      flex: 1,
+      zIndex: 1,
+    },
+    title: {
+      fontSize: 32,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    subtitle: {
+      marginTop: 6,
+      fontSize: 14,
+      lineHeight: 20,
+      color: c.textMuted,
+    },
+    addBtn: {
+      zIndex: 1,
+      backgroundColor: c.navy,
+      borderRadius: 22,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: 92,
+    },
+    addText: {
+      marginTop: 2,
+      color: c.white,
+      fontSize: 11,
+      fontWeight: '700',
+      textAlign: 'center',
+      lineHeight: 14,
+    },
+    search: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      backgroundColor: c.white,
+      borderRadius: 24,
+      minHeight: 48,
+      paddingHorizontal: 14,
+      borderWidth: 1,
+      borderColor: c.searchBorder,
+    },
+    searchInput: {
+      flex: 1,
+      fontSize: 15,
+      color: c.navy,
+      paddingVertical: 10,
+    },
+    filtersScroll: {
+      flexGrow: 0,
+      marginTop: 14,
+      marginBottom: 16,
+    },
+    filters: {
+      gap: 8,
+      paddingRight: 8,
+    },
+    pill: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 20,
+      backgroundColor: c.white,
+      borderWidth: 1,
+      borderColor: c.inputBorder,
+    },
+    pillActive: {
+      backgroundColor: c.navy,
+      borderColor: c.navy,
+    },
+    pillText: {
+      fontSize: 13,
+      fontWeight: '600',
+      color: c.navy,
+    },
+    pillTextActive: {
+      color: c.white,
+    },
+    grid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      rowGap: 12,
+    },
+    empty: {
+      marginTop: 24,
+      textAlign: 'center',
+      color: c.textMuted,
+    },
+    quote: {
+      marginTop: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+      backgroundColor: c.quoteBg,
+      borderRadius: 18,
+      paddingVertical: 14,
+      paddingHorizontal: 14,
+    },
+    quoteCactus: {
+      width: 16,
+      height: 28,
+      borderRadius: 8,
+      backgroundColor: c.green,
+    },
+    quoteText: {
+      flex: 1,
+      fontSize: 14,
+      fontWeight: '600',
+      fontStyle: 'italic',
+      color: c.navy,
+    },
+    quoteLine: {
+      width: 72,
+      height: 3,
+      borderRadius: 2,
+      backgroundColor: c.orange,
+      alignSelf: 'center',
+      marginTop: 8,
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+  };
+}

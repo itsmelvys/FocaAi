@@ -5,9 +5,9 @@ import { useRouter } from 'expo-router';
 
 import { BackButton } from '@/components/navigation/back-button';
 import { TaskCard } from '@/components/tarefas/task-card';
-import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTasks } from '@/hooks/use-tasks';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const FILTERS = [
   { id: 'all', label: 'Todas' },
@@ -18,6 +18,8 @@ const FILTERS = [
 export default function TarefasScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const { tasks, toggleTask } = useTasks();
   const [filter, setFilter] = useState('all');
 
@@ -53,7 +55,7 @@ export default function TarefasScreen() {
             <AppIcon
               name={{ ios: 'plus', android: 'add', web: 'add' }}
               size={22}
-              tintColor={BrandColors.white}
+              tintColor={colors.white}
             />
           </Pressable>
         </View>
@@ -89,56 +91,58 @@ export default function TarefasScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  header: {
-    paddingBottom: 12,
-    gap: 4,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  addButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: BrandColors.navy,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  filters: {
-    flexDirection: 'row',
-    gap: 8,
-    paddingBottom: 16,
-  },
-  pill: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: BrandColors.creamButton,
-  },
-  pillActive: {
-    backgroundColor: BrandColors.navy,
-  },
-  pillText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: BrandColors.navy,
-  },
-  pillTextActive: {
-    color: BrandColors.white,
-  },
-  pressed: {
-    opacity: 0.8,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    header: {
+      paddingBottom: 12,
+      gap: 4,
+    },
+    titleRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    addButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      backgroundColor: c.navy,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    filters: {
+      flexDirection: 'row',
+      gap: 8,
+      paddingBottom: 16,
+    },
+    pill: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 20,
+      backgroundColor: c.creamButton,
+    },
+    pillActive: {
+      backgroundColor: c.navy,
+    },
+    pillText: {
+      fontSize: 13,
+      fontWeight: '600',
+      color: c.navy,
+    },
+    pillTextActive: {
+      color: c.white,
+    },
+    pressed: {
+      opacity: 0.8,
+    },
+  };
+}

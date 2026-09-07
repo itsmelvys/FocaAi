@@ -6,9 +6,9 @@ import { useRouter } from 'expo-router';
 import { HomeHeader } from '@/components/home/home-header';
 import { HomeLandscape } from '@/components/home/home-landscape';
 import { TaskRow } from '@/components/home/task-row';
-import { BrandColors } from '@/constants/brand';
 import { HOME_DAY_TASKS } from '@/constants/mock-tasks';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const WEEK_TOTAL = 7;
 const WEEK_BASE_DONE = 3;
@@ -22,6 +22,8 @@ function formatCardDate() {
 export default function HomeScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [tasks, setTasks] = useState(HOME_DAY_TASKS);
   const [toast, setToast] = useState('');
 
@@ -83,7 +85,7 @@ export default function HomeScreen() {
             <AppIcon
               name={{ ios: 'chevron.right', android: 'chevron_right', web: 'chevron_right' }}
               size={16}
-              tintColor={BrandColors.navy}
+              tintColor={colors.navy}
             />
           </Pressable>
         </View>
@@ -114,109 +116,111 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  content: {
-    gap: 4,
-  },
-  card: {
-    backgroundColor: BrandColors.white,
-    borderRadius: 24,
-    padding: 16,
-    shadowColor: BrandColors.navy,
-    shadowOpacity: 0.08,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 3,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  dateChip: {
-    backgroundColor: BrandColors.creamButton,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  dateText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: BrandColors.navy,
-    letterSpacing: 0.4,
-  },
-  weekButton: {
-    marginTop: 10,
-    backgroundColor: BrandColors.creamButton,
-    borderRadius: 14,
-    minHeight: 48,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  weekButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: BrandColors.navy,
-  },
-  pressed: {
-    opacity: 0.8,
-  },
-  progressBlock: {
-    marginTop: 8,
-  },
-  progressCard: {
-    marginTop: -42,
-  },
-  progressTrack: {
-    marginTop: 14,
-    height: 10,
-    borderRadius: 8,
-    backgroundColor: BrandColors.progressTrack,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: BrandColors.math,
-    borderRadius: 8,
-  },
-  progressRow: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  progressLabel: {
-    fontSize: 13,
-    color: BrandColors.navy,
-  },
-  progressPercent: {
-    fontSize: 16,
-    fontWeight: '800',
-    color: BrandColors.math,
-  },
-  toast: {
-    position: 'absolute',
-    backgroundColor: BrandColors.navy,
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  toastText: {
-    color: BrandColors.white,
-    textAlign: 'center',
-    fontSize: 13,
-    fontWeight: '600',
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    content: {
+      gap: 4,
+    },
+    card: {
+      backgroundColor: c.white,
+      borderRadius: 24,
+      padding: 16,
+      shadowColor: c.navy,
+      shadowOpacity: 0.08,
+      shadowRadius: 16,
+      shadowOffset: { width: 0, height: 8 },
+      elevation: 3,
+    },
+    cardHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 4,
+    },
+    cardTitle: {
+      fontSize: 18,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    dateChip: {
+      backgroundColor: c.creamButton,
+      borderRadius: 8,
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+    },
+    dateText: {
+      fontSize: 11,
+      fontWeight: '700',
+      color: c.navy,
+      letterSpacing: 0.4,
+    },
+    weekButton: {
+      marginTop: 10,
+      backgroundColor: c.creamButton,
+      borderRadius: 14,
+      minHeight: 48,
+      paddingHorizontal: 16,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    weekButtonText: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: c.navy,
+    },
+    pressed: {
+      opacity: 0.8,
+    },
+    progressBlock: {
+      marginTop: 8,
+    },
+    progressCard: {
+      marginTop: -42,
+    },
+    progressTrack: {
+      marginTop: 14,
+      height: 10,
+      borderRadius: 8,
+      backgroundColor: c.progressTrack,
+      overflow: 'hidden',
+    },
+    progressFill: {
+      height: '100%',
+      backgroundColor: c.math,
+      borderRadius: 8,
+    },
+    progressRow: {
+      marginTop: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    progressLabel: {
+      fontSize: 13,
+      color: c.navy,
+    },
+    progressPercent: {
+      fontSize: 16,
+      fontWeight: '800',
+      color: c.math,
+    },
+    toast: {
+      position: 'absolute',
+      backgroundColor: c.navy,
+      borderRadius: 12,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+    },
+    toastText: {
+      color: c.white,
+      textAlign: 'center',
+      fontSize: 13,
+      fontWeight: '600',
+    },
+  };
+}

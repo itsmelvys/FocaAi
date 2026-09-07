@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 export function EditProfileForm({ visible, profile, onClose, onSave }) {
+  const styles = useThemedStyles(makeStyles);
   const [name, setName] = useState(profile?.name || '');
   const [bio, setBio] = useState(profile?.bio || '');
   const [fullName, setFullName] = useState(profile?.fullName || '');
@@ -57,56 +58,58 @@ export function EditProfileForm({ visible, profile, onClose, onSave }) {
   );
 }
 
-const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(26, 43, 76, 0.35)',
-    justifyContent: 'flex-end',
-  },
-  sheet: {
-    backgroundColor: BrandColors.cream,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    padding: 24,
-    paddingBottom: 32,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: BrandColors.navy,
-    marginBottom: 8,
-  },
-  label: {
-    marginTop: 12,
-    marginBottom: 6,
-    fontSize: 13,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  input: {
-    backgroundColor: BrandColors.white,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: BrandColors.inputBorder,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: BrandColors.navy,
-  },
-  save: {
-    marginTop: 20,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 16,
-    minHeight: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  saveText: {
-    color: BrandColors.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-});
+function makeStyles(c) {
+  return {
+    backdrop: {
+      flex: 1,
+      backgroundColor: c.overlay,
+      justifyContent: 'flex-end',
+    },
+    sheet: {
+      backgroundColor: c.cream,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      padding: 24,
+      paddingBottom: 32,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '800',
+      color: c.navy,
+      marginBottom: 8,
+    },
+    label: {
+      marginTop: 12,
+      marginBottom: 6,
+      fontSize: 13,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    input: {
+      backgroundColor: c.white,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: c.inputBorder,
+      paddingHorizontal: 14,
+      paddingVertical: 12,
+      fontSize: 15,
+      color: c.navy,
+    },
+    save: {
+      marginTop: 20,
+      backgroundColor: c.navy,
+      borderRadius: 16,
+      minHeight: 52,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    saveText: {
+      color: c.white,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+  };
+}

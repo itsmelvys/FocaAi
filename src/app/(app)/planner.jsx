@@ -7,7 +7,6 @@ import { HomeLandscape } from '@/components/home/home-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { PlanSlotForm } from '@/components/planner/plan-slot-form';
 import { ScheduleItem } from '@/components/planner/schedule-item';
-import { BrandColors } from '@/constants/brand';
 import {
   MONTH_SHORT,
   WEEKDAY_SHORT,
@@ -18,6 +17,7 @@ import {
   weekDaysFrom,
 } from '@/constants/mock-planner';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 function sortBlocks(blocks) {
   return [...blocks].sort((left, right) => left.time.localeCompare(right.time));
@@ -26,6 +26,8 @@ function sortBlocks(blocks) {
 export default function PlannerScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const today = useMemo(() => new Date(), []);
   const weekDays = useMemo(() => weekDaysFrom(today), [today]);
   const [selected, setSelected] = useState(today);
@@ -94,7 +96,7 @@ export default function PlannerScreen() {
             <AppIcon
               name={{ ios: 'calendar', android: 'calendar_month', web: 'calendar_month' }}
               size={22}
-              tintColor={BrandColors.navy}
+              tintColor={colors.navy}
             />
           </Pressable>
         </View>
@@ -157,7 +159,7 @@ export default function PlannerScreen() {
             <AppIcon
               name={{ ios: 'checkmark', android: 'check', web: 'check' }}
               size={16}
-              tintColor={BrandColors.white}
+              tintColor={colors.white}
             />
           </View>
           <View style={styles.summaryBody}>
@@ -189,7 +191,7 @@ export default function PlannerScreen() {
         <AppIcon
           name={{ ios: 'plus', android: 'add', web: 'add' }}
           size={20}
-          tintColor={BrandColors.white}
+          tintColor={colors.white}
         />
         <Text style={styles.fabText}>Planejar horário</Text>
       </Pressable>
@@ -199,239 +201,241 @@ export default function PlannerScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  header: {
-    paddingBottom: 8,
-    overflow: 'hidden',
-  },
-  sun: {
-    position: 'absolute',
-    right: 28,
-    top: 18,
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: BrandColors.sun,
-    opacity: 0.35,
-  },
-  birdOne: {
-    position: 'absolute',
-    right: 108,
-    top: 36,
-    width: 16,
-    height: 4,
-    borderRadius: 3,
-    backgroundColor: BrandColors.bird,
-    transform: [{ rotate: '-22deg' }],
-  },
-  birdTwo: {
-    position: 'absolute',
-    right: 92,
-    top: 28,
-    width: 12,
-    height: 3,
-    borderRadius: 3,
-    backgroundColor: BrandColors.bird,
-    transform: [{ rotate: '18deg' }],
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  titleBlock: {
-    flex: 1,
-    zIndex: 1,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginTop: 4,
-    fontSize: 14,
-    lineHeight: 20,
-    color: BrandColors.textMuted,
-  },
-  calendarBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: BrandColors.creamButton,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1,
-  },
-  daysWrap: {
-    height: 112,
-    marginBottom: 4,
-  },
-  daysScroll: {
-    flexGrow: 0,
-  },
-  days: {
-    gap: 10,
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-  dayChip: {
-    width: 52,
-    height: 96,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-  },
-  dayWeek: {
-    height: 16,
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '600',
-    color: BrandColors.navy,
-    textAlign: 'center',
-  },
-  numberBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    overflow: 'hidden',
-    backgroundColor: BrandColors.creamButton,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  numberBoxActive: {
-    backgroundColor: BrandColors.navy,
-  },
-  dayNumber: {
-    width: 44,
-    height: 44,
-    fontSize: 18,
-    lineHeight: 44,
-    fontWeight: '800',
-    color: BrandColors.navy,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    includeFontPadding: false,
-  },
-  dayNumberActive: {
-    color: BrandColors.white,
-  },
-  dayMonth: {
-    height: 16,
-    fontSize: 11,
-    lineHeight: 16,
-    fontWeight: '700',
-    color: BrandColors.navy,
-    letterSpacing: 0.3,
-    textAlign: 'center',
-  },
-  dayHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 14,
-    gap: 12,
-  },
-  dayTitle: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  todayBtn: {
-    backgroundColor: BrandColors.creamButton,
-    borderRadius: 16,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
-  todayText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  summary: {
-    marginTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: '#EEF2F7',
-    borderRadius: 20,
-    padding: 14,
-  },
-  checkCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: BrandColors.navy,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  summaryBody: {
-    flex: 1,
-  },
-  summaryText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  summaryRow: {
-    marginTop: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  progressTrack: {
-    flex: 1,
-    height: 8,
-    borderRadius: 8,
-    backgroundColor: BrandColors.white,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: BrandColors.navy,
-    borderRadius: 8,
-  },
-  percent: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  quote: {
-    marginTop: 4,
-    marginBottom: 8,
-    textAlign: 'center',
-    fontSize: 14,
-    fontStyle: 'italic',
-    color: BrandColors.navy,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 16,
-    minHeight: 52,
-    borderRadius: 26,
-    backgroundColor: BrandColors.navy,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    shadowColor: BrandColors.navy,
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 5,
-  },
-  fabText: {
-    color: BrandColors.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    header: {
+      paddingBottom: 8,
+      overflow: 'hidden',
+    },
+    sun: {
+      position: 'absolute',
+      right: 28,
+      top: 18,
+      width: 72,
+      height: 72,
+      borderRadius: 36,
+      backgroundColor: c.sun,
+      opacity: 0.35,
+    },
+    birdOne: {
+      position: 'absolute',
+      right: 108,
+      top: 36,
+      width: 16,
+      height: 4,
+      borderRadius: 3,
+      backgroundColor: c.bird,
+      transform: [{ rotate: '-22deg' }],
+    },
+    birdTwo: {
+      position: 'absolute',
+      right: 92,
+      top: 28,
+      width: 12,
+      height: 3,
+      borderRadius: 3,
+      backgroundColor: c.bird,
+      transform: [{ rotate: '18deg' }],
+    },
+    titleRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    titleBlock: {
+      flex: 1,
+      zIndex: 1,
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    subtitle: {
+      marginTop: 4,
+      fontSize: 14,
+      lineHeight: 20,
+      color: c.textMuted,
+    },
+    calendarBtn: {
+      width: 44,
+      height: 44,
+      borderRadius: 14,
+      backgroundColor: c.creamButton,
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1,
+    },
+    daysWrap: {
+      height: 112,
+      marginBottom: 4,
+    },
+    daysScroll: {
+      flexGrow: 0,
+    },
+    days: {
+      gap: 10,
+      alignItems: 'center',
+      paddingVertical: 8,
+    },
+    dayChip: {
+      width: 52,
+      height: 96,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'column',
+    },
+    dayWeek: {
+      height: 16,
+      fontSize: 12,
+      lineHeight: 16,
+      fontWeight: '600',
+      color: c.navy,
+      textAlign: 'center',
+    },
+    numberBox: {
+      width: 44,
+      height: 44,
+      borderRadius: 12,
+      overflow: 'hidden',
+      backgroundColor: c.creamButton,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    numberBoxActive: {
+      backgroundColor: c.navy,
+    },
+    dayNumber: {
+      width: 44,
+      height: 44,
+      fontSize: 18,
+      lineHeight: 44,
+      fontWeight: '800',
+      color: c.navy,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      includeFontPadding: false,
+    },
+    dayNumberActive: {
+      color: c.white,
+    },
+    dayMonth: {
+      height: 16,
+      fontSize: 11,
+      lineHeight: 16,
+      fontWeight: '700',
+      color: c.navy,
+      letterSpacing: 0.3,
+      textAlign: 'center',
+    },
+    dayHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 14,
+      gap: 12,
+    },
+    dayTitle: {
+      flex: 1,
+      fontSize: 18,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    todayBtn: {
+      backgroundColor: c.creamButton,
+      borderRadius: 16,
+      paddingHorizontal: 14,
+      paddingVertical: 8,
+    },
+    todayText: {
+      fontSize: 13,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    summary: {
+      marginTop: 8,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      backgroundColor: c.summaryBg,
+      borderRadius: 20,
+      padding: 14,
+    },
+    checkCircle: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.navy,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    summaryBody: {
+      flex: 1,
+    },
+    summaryText: {
+      fontSize: 14,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    summaryRow: {
+      marginTop: 8,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+    },
+    progressTrack: {
+      flex: 1,
+      height: 8,
+      borderRadius: 8,
+      backgroundColor: c.white,
+      overflow: 'hidden',
+    },
+    progressFill: {
+      height: '100%',
+      backgroundColor: c.navy,
+      borderRadius: 8,
+    },
+    percent: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    quote: {
+      marginTop: 4,
+      marginBottom: 8,
+      textAlign: 'center',
+      fontSize: 14,
+      fontStyle: 'italic',
+      color: c.navy,
+    },
+    fab: {
+      position: 'absolute',
+      bottom: 16,
+      minHeight: 52,
+      borderRadius: 26,
+      backgroundColor: c.navy,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      shadowColor: c.navy,
+      shadowOpacity: 0.25,
+      shadowRadius: 12,
+      shadowOffset: { width: 0, height: 6 },
+      elevation: 5,
+    },
+    fabText: {
+      color: c.white,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+  };
+}

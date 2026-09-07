@@ -1,9 +1,9 @@
 import { AppIcon } from '@/components/ui/app-icon';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
 import { Layout } from '@/constants/layout';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 const TABS = [
   {
@@ -33,8 +33,47 @@ const TABS = [
   },
 ];
 
+function makeStyles(c) {
+  return {
+    bar: {
+      flexDirection: 'row',
+      backgroundColor: c.white,
+      borderTopWidth: 1,
+      borderTopColor: c.tabBarBorder,
+    },
+    item: {
+      flex: 1,
+      minHeight: Layout.tabItemMinHeight,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 4,
+    },
+    label: {
+      fontSize: 11,
+      fontWeight: '500',
+      color: c.tabInactive,
+    },
+    labelActive: {
+      color: c.navy,
+      fontWeight: '700',
+    },
+    indicator: {
+      width: 18,
+      height: 3,
+      borderRadius: 2,
+      backgroundColor: c.orange,
+      marginTop: 2,
+    },
+    indicatorSpacer: {
+      height: 5,
+      marginTop: 2,
+    },
+  };
+}
+
 export function AppTabBar({ state, navigation }) {
   const padding = useScreenPadding();
+  const styles = useThemedStyles(makeStyles);
 
   return (
     <View
@@ -75,7 +114,7 @@ export function AppTabBar({ state, navigation }) {
             <AppIcon
               name={tab.icon}
               size={22}
-              tintColor={focused ? BrandColors.navy : BrandColors.tabInactive}
+              tintColor={focused ? styles.labelActive.color : styles.label.color}
             />
             <Text style={[styles.label, focused && styles.labelActive]}>{tab.label}</Text>
             {focused ? <View style={styles.indicator} /> : <View style={styles.indicatorSpacer} />}
@@ -85,39 +124,3 @@ export function AppTabBar({ state, navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  bar: {
-    flexDirection: 'row',
-    backgroundColor: BrandColors.white,
-    borderTopWidth: 1,
-    borderTopColor: '#F0EBE3',
-  },
-  item: {
-    flex: 1,
-    minHeight: Layout.tabItemMinHeight,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-  },
-  label: {
-    fontSize: 11,
-    fontWeight: '500',
-    color: BrandColors.tabInactive,
-  },
-  labelActive: {
-    color: BrandColors.navy,
-    fontWeight: '700',
-  },
-  indicator: {
-    width: 18,
-    height: 3,
-    borderRadius: 2,
-    backgroundColor: BrandColors.orange,
-    marginTop: 2,
-  },
-  indicatorSpacer: {
-    height: 5,
-    marginTop: 2,
-  },
-});

@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { CadastroForm } from '@/components/cadastro/cadastro-form';
 import { IntroLandscape } from '@/components/intro/intro-landscape';
 import { BackButton } from '@/components/navigation/back-button';
-import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 export default function CadastroScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const styles = useThemedStyles(makeStyles);
 
   return (
     <View style={styles.screen}>
-      <StatusBar style="dark" />
       <IntroLandscape />
 
       <KeyboardAvoidingView
@@ -43,30 +42,32 @@ export default function CadastroScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-    overflow: 'hidden',
-  },
-  flex: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    zIndex: 1,
-  },
-  title: {
-    marginTop: 8,
-    marginBottom: 6,
-    fontSize: 28,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginBottom: 20,
-    fontSize: 15,
-    lineHeight: 22,
-    color: BrandColors.textMuted,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+      overflow: 'hidden',
+    },
+    flex: {
+      flex: 1,
+    },
+    scrollContent: {
+      flexGrow: 1,
+      zIndex: 1,
+    },
+    title: {
+      marginTop: 8,
+      marginBottom: 6,
+      fontSize: 28,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    subtitle: {
+      marginBottom: 20,
+      fontSize: 15,
+      lineHeight: 22,
+      color: c.textMuted,
+    },
+  };
+}

@@ -11,8 +11,8 @@ import {
   View,
 } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 function InputField({
   icon,
@@ -23,14 +23,16 @@ function InputField({
   autoCapitalize = 'none',
   rightIcon,
   onRightIconPress,
+  styles,
+  colors,
 }) {
   return (
     <View style={styles.inputWrapper}>
-      <AppIcon name={icon} size={20} tintColor={BrandColors.navy} style={styles.inputIcon} />
+      <AppIcon name={icon} size={20} tintColor={colors.navy} style={styles.inputIcon} />
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor={BrandColors.inputPlaceholder}
+        placeholderTextColor={colors.inputPlaceholder}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
@@ -39,7 +41,7 @@ function InputField({
       />
       {rightIcon ? (
         <Pressable onPress={onRightIconPress} hitSlop={8} style={styles.eyeButton}>
-          <AppIcon name={rightIcon} size={20} tintColor={BrandColors.navy} />
+          <AppIcon name={rightIcon} size={20} tintColor={colors.navy} />
         </Pressable>
       ) : null}
     </View>
@@ -49,6 +51,8 @@ function InputField({
 export function CadastroForm() {
   const router = useRouter();
   const { signIn } = useAuth();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -82,12 +86,16 @@ export function CadastroForm() {
         value={name}
         onChangeText={setName}
         autoCapitalize="words"
+        styles={styles}
+        colors={colors}
       />
       <InputField
         icon={{ ios: 'envelope', android: 'mail', web: 'mail' }}
         placeholder="E-mail"
         value={email}
         onChangeText={setEmail}
+        styles={styles}
+        colors={colors}
       />
       <InputField
         icon={{ ios: 'lock', android: 'lock', web: 'lock' }}
@@ -104,6 +112,8 @@ export function CadastroForm() {
             : { ios: 'eye', android: 'visibility', web: 'visibility' }
         }
         onRightIconPress={() => setShowPassword((prev) => !prev)}
+        styles={styles}
+        colors={colors}
       />
       <InputField
         icon={{ ios: 'lock', android: 'lock', web: 'lock' }}
@@ -114,6 +124,8 @@ export function CadastroForm() {
           setError('');
         }}
         secureTextEntry={!showPassword}
+        styles={styles}
+        colors={colors}
       />
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -128,7 +140,7 @@ export function CadastroForm() {
           loading && styles.disabled,
         ]}>
         {loading ? (
-          <ActivityIndicator color={BrandColors.white} />
+          <ActivityIndicator color={colors.white} />
         ) : (
           <Text style={styles.primaryButtonText}>Criar conta</Text>
         )}
@@ -137,57 +149,59 @@ export function CadastroForm() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    gap: 12,
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: BrandColors.white,
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    minHeight: 56,
-    shadowColor: BrandColors.navy,
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
-  },
-  inputIcon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    fontSize: 15,
-    color: BrandColors.navy,
-  },
-  eyeButton: {
-    padding: 4,
-  },
-  error: {
-    fontSize: 13,
-    color: BrandColors.orange,
-    fontWeight: '600',
-  },
-  primaryButton: {
-    marginTop: 8,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 16,
-    minHeight: 54,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  primaryButtonText: {
-    color: BrandColors.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-  disabled: {
-    opacity: 0.7,
-  },
-});
+function makeStyles(c) {
+  return {
+    container: {
+      width: '100%',
+      gap: 12,
+    },
+    inputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: c.white,
+      borderRadius: 16,
+      paddingHorizontal: 16,
+      minHeight: 56,
+      shadowColor: c.navy,
+      shadowOpacity: 0.06,
+      shadowRadius: 10,
+      shadowOffset: { width: 0, height: 4 },
+      elevation: 2,
+    },
+    inputIcon: {
+      marginRight: 10,
+    },
+    input: {
+      flex: 1,
+      fontSize: 15,
+      color: c.navy,
+    },
+    eyeButton: {
+      padding: 4,
+    },
+    error: {
+      fontSize: 13,
+      color: c.orange,
+      fontWeight: '600',
+    },
+    primaryButton: {
+      marginTop: 8,
+      backgroundColor: c.navy,
+      borderRadius: 16,
+      minHeight: 54,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    primaryButtonText: {
+      color: c.white,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+    disabled: {
+      opacity: 0.7,
+    },
+  };
+}

@@ -1,13 +1,12 @@
 import { useRouter } from 'expo-router';
 import { AppIcon } from '@/components/ui/app-icon';
-import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { OnboardingScene } from '@/components/onboarding/onboarding-scene';
 import { BackButton } from '@/components/navigation/back-button';
-import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const STEPS = [
   {
@@ -27,6 +26,8 @@ const STEPS = [
 export default function OnboardingScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [step, setStep] = useState(0);
   const isLast = step === STEPS.length - 1;
 
@@ -54,7 +55,6 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.screen}>
-      <StatusBar style="dark" />
       <View
         style={[
           styles.topBar,
@@ -93,7 +93,7 @@ export default function OnboardingScreen() {
           <AppIcon
             name={{ ios: 'arrow.right', android: 'arrow_forward', web: 'arrow_forward' }}
             size={18}
-            tintColor={BrandColors.white}
+            tintColor={colors.white}
           />
         </Pressable>
       </View>
@@ -101,69 +101,71 @@ export default function OnboardingScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-    marginBottom: 8,
-  },
-  progressRow: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 8,
-  },
-  progressSegment: {
-    flex: 1,
-    height: 4,
-    borderRadius: 4,
-    backgroundColor: '#E4DDD2',
-  },
-  progressActive: {
-    backgroundColor: BrandColors.navy,
-  },
-  skip: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: BrandColors.navy,
-  },
-  body: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    marginTop: 28,
-    fontSize: 26,
-    lineHeight: 32,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginTop: 12,
-    fontSize: 16,
-    lineHeight: 24,
-    color: BrandColors.textMuted,
-  },
-  nextButton: {
-    backgroundColor: BrandColors.navy,
-    borderRadius: 14,
-    minHeight: 54,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  nextText: {
-    color: BrandColors.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  pressed: {
-    opacity: 0.8,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    topBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 16,
+      marginBottom: 8,
+    },
+    progressRow: {
+      flex: 1,
+      flexDirection: 'row',
+      gap: 8,
+    },
+    progressSegment: {
+      flex: 1,
+      height: 4,
+      borderRadius: 4,
+      backgroundColor: c.progressTrack,
+    },
+    progressActive: {
+      backgroundColor: c.navy,
+    },
+    skip: {
+      fontSize: 15,
+      fontWeight: '600',
+      color: c.navy,
+    },
+    body: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    title: {
+      marginTop: 28,
+      fontSize: 26,
+      lineHeight: 32,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    subtitle: {
+      marginTop: 12,
+      fontSize: 16,
+      lineHeight: 24,
+      color: c.textMuted,
+    },
+    nextButton: {
+      backgroundColor: c.navy,
+      borderRadius: 14,
+      minHeight: 54,
+      paddingHorizontal: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+    },
+    nextText: {
+      color: c.white,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    pressed: {
+      opacity: 0.8,
+    },
+  };
+}

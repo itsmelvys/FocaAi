@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
 import { PLANNER_DURATIONS, PLANNER_TIMES } from '@/constants/mock-planner';
 import { SUBJECTS } from '@/constants/mock-tasks';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 export function PlanSlotForm({ visible, onClose, onSave }) {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [subject, setSubject] = useState(SUBJECTS[0]);
   const [title, setTitle] = useState('');
   const [time, setTime] = useState(PLANNER_TIMES[1]);
@@ -57,7 +59,7 @@ export function PlanSlotForm({ visible, onClose, onSave }) {
             value={title}
             onChangeText={setTitle}
             placeholder="Ex.: Lista de exercícios"
-            placeholderTextColor={BrandColors.inputPlaceholder}
+            placeholderTextColor={colors.inputPlaceholder}
             style={styles.input}
           />
 
@@ -100,78 +102,80 @@ export function PlanSlotForm({ visible, onClose, onSave }) {
   );
 }
 
-const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(26, 43, 76, 0.35)',
-    justifyContent: 'flex-end',
-  },
-  sheet: {
-    backgroundColor: BrandColors.cream,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    padding: 24,
-    paddingBottom: 32,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: BrandColors.navy,
-    marginBottom: 16,
-  },
-  label: {
-    marginTop: 12,
-    marginBottom: 8,
-    fontSize: 13,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  chips: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 16,
-    backgroundColor: BrandColors.creamButton,
-  },
-  chipActive: {
-    backgroundColor: BrandColors.navy,
-  },
-  chipText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: BrandColors.navy,
-  },
-  chipTextActive: {
-    color: BrandColors.white,
-  },
-  input: {
-    backgroundColor: BrandColors.white,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: BrandColors.inputBorder,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: BrandColors.navy,
-  },
-  save: {
-    marginTop: 20,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 16,
-    minHeight: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  saveText: {
-    color: BrandColors.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-});
+function makeStyles(c) {
+  return {
+    backdrop: {
+      flex: 1,
+      backgroundColor: c.overlay,
+      justifyContent: 'flex-end',
+    },
+    sheet: {
+      backgroundColor: c.cream,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      padding: 24,
+      paddingBottom: 32,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '800',
+      color: c.navy,
+      marginBottom: 16,
+    },
+    label: {
+      marginTop: 12,
+      marginBottom: 8,
+      fontSize: 13,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    chips: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+    },
+    chip: {
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 16,
+      backgroundColor: c.creamButton,
+    },
+    chipActive: {
+      backgroundColor: c.navy,
+    },
+    chipText: {
+      fontSize: 13,
+      fontWeight: '600',
+      color: c.navy,
+    },
+    chipTextActive: {
+      color: c.white,
+    },
+    input: {
+      backgroundColor: c.white,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: c.inputBorder,
+      paddingHorizontal: 14,
+      paddingVertical: 12,
+      fontSize: 15,
+      color: c.navy,
+    },
+    save: {
+      marginTop: 20,
+      backgroundColor: c.navy,
+      borderRadius: 16,
+      minHeight: 52,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    saveText: {
+      color: c.white,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+  };
+}

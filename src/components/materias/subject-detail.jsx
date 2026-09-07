@@ -1,9 +1,12 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onToggleDone }) {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
+
   if (!subject) {
     return null;
   }
@@ -17,7 +20,7 @@ export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onT
         <View style={styles.sheet}>
           <View style={styles.header}>
             <View style={[styles.icon, { backgroundColor: subject.color }]}>
-              <AppIcon name={subject.icon} size={22} tintColor={BrandColors.white} />
+              <AppIcon name={subject.icon} size={22} tintColor={colors.white} />
             </View>
             <View style={styles.texts}>
               <Text style={styles.title}>{subject.name}</Text>
@@ -38,7 +41,7 @@ export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onT
               <AppIcon
                 name={{ ios: 'star', android: 'star', web: 'star' }}
                 size={18}
-                tintColor={subject.favorite ? BrandColors.orange : BrandColors.navy}
+                tintColor={subject.favorite ? colors.orange : colors.navy}
               />
               <Text style={styles.actionText}>{subject.favorite ? 'Favorita' : 'Favoritar'}</Text>
             </Pressable>
@@ -48,7 +51,7 @@ export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onT
               <AppIcon
                 name={{ ios: 'checkmark.circle', android: 'check-circle', web: 'check-circle' }}
                 size={18}
-                tintColor={BrandColors.navy}
+                tintColor={colors.navy}
               />
               <Text style={styles.actionText}>{studying ? 'Marcar concluída' : 'Em estudo'}</Text>
             </Pressable>
@@ -59,69 +62,71 @@ export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onT
   );
 }
 
-const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(26, 43, 76, 0.35)',
-    justifyContent: 'flex-end',
-  },
-  sheet: {
-    backgroundColor: BrandColors.cream,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    padding: 24,
-    paddingBottom: 32,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  icon: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  texts: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  meta: {
-    marginTop: 2,
-    fontSize: 14,
-    color: BrandColors.textMuted,
-  },
-  hint: {
-    marginTop: 16,
-    fontSize: 14,
-    lineHeight: 21,
-    color: BrandColors.textMuted,
-  },
-  actions: {
-    marginTop: 20,
-    gap: 10,
-  },
-  action: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: BrandColors.white,
-    borderRadius: 14,
-    minHeight: 48,
-    paddingHorizontal: 14,
-  },
-  actionText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: BrandColors.navy,
-  },
-  pressed: {
-    opacity: 0.8,
-  },
-});
+function makeStyles(c) {
+  return {
+    backdrop: {
+      flex: 1,
+      backgroundColor: c.overlay,
+      justifyContent: 'flex-end',
+    },
+    sheet: {
+      backgroundColor: c.cream,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      padding: 24,
+      paddingBottom: 32,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+    },
+    icon: {
+      width: 48,
+      height: 48,
+      borderRadius: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    texts: {
+      flex: 1,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    meta: {
+      marginTop: 2,
+      fontSize: 14,
+      color: c.textMuted,
+    },
+    hint: {
+      marginTop: 16,
+      fontSize: 14,
+      lineHeight: 21,
+      color: c.textMuted,
+    },
+    actions: {
+      marginTop: 20,
+      gap: 10,
+    },
+    action: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      backgroundColor: c.white,
+      borderRadius: 14,
+      minHeight: 48,
+      paddingHorizontal: 14,
+    },
+    actionText: {
+      fontSize: 15,
+      fontWeight: '600',
+      color: c.navy,
+    },
+    pressed: {
+      opacity: 0.8,
+    },
+  };
+}

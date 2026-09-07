@@ -2,15 +2,17 @@ import { useRouter } from 'expo-router';
 import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
 import { useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { BackButton } from '@/components/navigation/back-button';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 export function HomeHeader({ onBellPress }) {
   const padding = useScreenPadding();
   const router = useRouter();
   const { user } = useAuth();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const firstName = user?.name?.split(' ')[0] || 'Letícia';
 
   return (
@@ -47,7 +49,7 @@ export function HomeHeader({ onBellPress }) {
           <AppIcon
             name={{ ios: 'bell', android: 'notifications', web: 'notifications' }}
             size={22}
-            tintColor={BrandColors.navy}
+            tintColor={colors.navy}
           />
         </Pressable>
       </View>
@@ -55,76 +57,78 @@ export function HomeHeader({ onBellPress }) {
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: {
-    paddingBottom: 12,
-    overflow: 'hidden',
-    gap: 8,
-  },
-  sun: {
-    position: 'absolute',
-    right: 48,
-    width: 78,
-    height: 78,
-    borderRadius: 39,
-    backgroundColor: BrandColors.hillSoft,
-  },
-  sunInner: {
-    position: 'absolute',
-    right: 62,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: BrandColors.cream,
-    opacity: 0.35,
-  },
-  cloudBack: {
-    position: 'absolute',
-    right: 112,
-    width: 52,
-    height: 22,
-    borderRadius: 12,
-    backgroundColor: BrandColors.cloud,
-  },
-  cloudFront: {
-    position: 'absolute',
-    right: 90,
-    width: 36,
-    height: 16,
-    borderRadius: 10,
-    backgroundColor: BrandColors.cloud,
-    opacity: 0.8,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    zIndex: 1,
-  },
-  texts: {
-    flex: 1,
-    paddingRight: 12,
-  },
-  hello: {
-    fontSize: 28,
-    lineHeight: 34,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginTop: 4,
-    fontSize: 16,
-    color: BrandColors.navy,
-    opacity: 0.8,
-  },
-  bell: {
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 2,
-  },
-  pressed: {
-    opacity: 0.65,
-  },
-});
+function makeStyles(c) {
+  return {
+    wrap: {
+      paddingBottom: 12,
+      overflow: 'hidden',
+      gap: 8,
+    },
+    sun: {
+      position: 'absolute',
+      right: 48,
+      width: 78,
+      height: 78,
+      borderRadius: 39,
+      backgroundColor: c.hillSoft,
+    },
+    sunInner: {
+      position: 'absolute',
+      right: 62,
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: c.cream,
+      opacity: 0.35,
+    },
+    cloudBack: {
+      position: 'absolute',
+      right: 112,
+      width: 52,
+      height: 22,
+      borderRadius: 12,
+      backgroundColor: c.cloud,
+    },
+    cloudFront: {
+      position: 'absolute',
+      right: 90,
+      width: 36,
+      height: 16,
+      borderRadius: 10,
+      backgroundColor: c.cloud,
+      opacity: 0.8,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      zIndex: 1,
+    },
+    texts: {
+      flex: 1,
+      paddingRight: 12,
+    },
+    hello: {
+      fontSize: 28,
+      lineHeight: 34,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    subtitle: {
+      marginTop: 4,
+      fontSize: 16,
+      color: c.navy,
+      opacity: 0.8,
+    },
+    bell: {
+      width: 44,
+      height: 44,
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2,
+    },
+    pressed: {
+      opacity: 0.65,
+    },
+  };
+}

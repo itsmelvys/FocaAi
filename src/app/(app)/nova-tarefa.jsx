@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { BackButton } from '@/components/navigation/back-button';
 import { FestivalFlags } from '@/components/tarefas/festival-flags';
 import { NovaTarefaForm } from '@/components/tarefas/nova-tarefa-form';
-import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 export default function NovaTarefaScreen() {
   const router = useRouter();
   const padding = useScreenPadding();
+  const styles = useThemedStyles(makeStyles);
 
   return (
     <View style={styles.screen}>
-      <StatusBar style="dark" />
       <FestivalFlags />
       <KeyboardAvoidingView
         style={styles.flex}
@@ -40,26 +39,28 @@ export default function NovaTarefaScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  flex: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  headerSpacer: {
-    width: 72,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    flex: {
+      flex: 1,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 16,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    headerSpacer: {
+      width: 72,
+    },
+  };
+}

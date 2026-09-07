@@ -5,6 +5,6 @@ export function AppIcon({ name, size = 24, tintColor, color, style }) {
   const iconName = String(raw).replaceAll('_', '-').replaceAll('.', '-');
 
   return (
-    <MaterialIcons name={iconName} size={size} color={tintColor || color || '#1A2B4C'} style={style} />
+    <MaterialIcons name={iconName} size={size} color={tintColor || color || '#9AA3AF'} style={style} />
   );
 }

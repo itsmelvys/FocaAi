@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { BackButton } from '@/components/navigation/back-button';
-import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 export function PlaceholderScreen({ title, description }) {
   const padding = useScreenPadding();
   const router = useRouter();
+  const styles = useThemedStyles(makeStyles);
 
   return (
     <View style={styles.screen}>
@@ -35,27 +36,29 @@ export function PlaceholderScreen({ title, description }) {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  body: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: BrandColors.navy,
-    textAlign: 'center',
-  },
-  description: {
-    marginTop: 10,
-    fontSize: 15,
-    lineHeight: 22,
-    color: BrandColors.textMuted,
-    textAlign: 'center',
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    body: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: '800',
+      color: c.navy,
+      textAlign: 'center',
+    },
+    description: {
+      marginTop: 10,
+      fontSize: 15,
+      lineHeight: 22,
+      color: c.textMuted,
+      textAlign: 'center',
+    },
+  };
+}

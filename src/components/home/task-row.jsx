@@ -1,9 +1,12 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 export function TaskRow({ task, onToggle, isLast }) {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
+
   return (
     <Pressable
       accessibilityRole="checkbox"
@@ -29,7 +32,7 @@ export function TaskRow({ task, onToggle, isLast }) {
           <AppIcon
             name={{ ios: 'checkmark', android: 'check', web: 'check' }}
             size={12}
-            tintColor={BrandColors.white}
+            tintColor={colors.white}
           />
         ) : null}
       </View>
@@ -37,52 +40,54 @@ export function TaskRow({ task, onToggle, isLast }) {
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingVertical: 12,
-  },
-  rowBorder: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#E8E4DC',
-  },
-  pressed: {
-    opacity: 0.75,
-  },
-  iconBox: {
-    width: 42,
-    height: 42,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  texts: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginTop: 2,
-    fontSize: 13,
-    color: BrandColors.textMuted,
-  },
-  meta: {
-    marginTop: 4,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  checkbox: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 2,
-    borderColor: '#D7D2CB',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function makeStyles(c) {
+  return {
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      paddingVertical: 12,
+    },
+    rowBorder: {
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: c.progressTrack,
+    },
+    pressed: {
+      opacity: 0.75,
+    },
+    iconBox: {
+      width: 42,
+      height: 42,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    texts: {
+      flex: 1,
+    },
+    title: {
+      fontSize: 15,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    subtitle: {
+      marginTop: 2,
+      fontSize: 13,
+      color: c.textMuted,
+    },
+    meta: {
+      marginTop: 4,
+      fontSize: 12,
+      fontWeight: '600',
+    },
+    checkbox: {
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+      borderWidth: 2,
+      borderColor: c.divider,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  };
+}

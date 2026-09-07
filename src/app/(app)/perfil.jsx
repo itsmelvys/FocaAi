@@ -7,11 +7,12 @@ import { HomeLandscape } from '@/components/home/home-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { EditProfileForm } from '@/components/perfil/edit-profile-form';
 import { ProfileRow } from '@/components/perfil/profile-row';
-import { BrandColors } from '@/constants/brand';
+import { ThemePicker } from '@/components/perfil/theme-picker';
 import { SUBJECTS } from '@/constants/mock-subjects';
 import { DEMO_PROFILE, useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTasks } from '@/hooks/use-tasks';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const STATS = [
   { key: 'subjects', label: 'Matérias' },
@@ -25,7 +26,10 @@ export default function PerfilScreen() {
   const router = useRouter();
   const { user, signOut, updateProfile } = useAuth();
   const { tasks } = useTasks();
+  const { colors, themeLabel } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [editOpen, setEditOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const [toast, setToast] = useState('');
 
   const profile = user || DEMO_PROFILE;
@@ -77,8 +81,9 @@ export default function PerfilScreen() {
     },
     {
       title: 'Tema do aplicativo',
-      detail: profile.theme,
+      detail: themeLabel,
       icon: { ios: 'moon', android: 'dark-mode', web: 'dark-mode' },
+      onPress: () => setThemeOpen(true),
     },
     {
       title: 'Idioma',
@@ -119,12 +124,12 @@ export default function PerfilScreen() {
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Configurações"
-              onPress={() => showToast('As preferências ficam mais abaixo')}
+              onPress={() => setThemeOpen(true)}
               style={({ pressed }) => [styles.settingsBtn, pressed && styles.pressed]}>
               <AppIcon
                 name={{ ios: 'gearshape', android: 'settings', web: 'settings' }}
                 size={22}
-                tintColor={BrandColors.navy}
+                tintColor={colors.navy}
               />
             </Pressable>
           </View>
@@ -139,7 +144,7 @@ export default function PerfilScreen() {
               <AppIcon
                 name={{ ios: 'camera', android: 'photo-camera', web: 'photo-camera' }}
                 size={12}
-                tintColor={BrandColors.white}
+                tintColor={colors.white}
               />
             </View>
           </View>
@@ -151,7 +156,7 @@ export default function PerfilScreen() {
             <AppIcon
               name={{ ios: 'pencil', android: 'edit', web: 'edit' }}
               size={14}
-              tintColor={BrandColors.navy}
+              tintColor={colors.navy}
             />
             <Text style={styles.editText}>Editar perfil</Text>
           </Pressable>
@@ -201,7 +206,7 @@ export default function PerfilScreen() {
             <AppIcon
               name={{ ios: 'rectangle.portrait.and.arrow.right', android: 'logout', web: 'logout' }}
               size={18}
-              tintColor={BrandColors.priorityHigh}
+              tintColor={colors.priorityHigh}
             />
             <Text style={styles.logoutText}>Sair da conta</Text>
           </Pressable>
@@ -211,6 +216,7 @@ export default function PerfilScreen() {
         <HomeLandscape />
       </ScrollView>
 
+      <ThemePicker visible={themeOpen} onClose={() => setThemeOpen(false)} />
       <EditProfileForm
         visible={editOpen}
         profile={profile}
@@ -227,222 +233,224 @@ export default function PerfilScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-  },
-  header: {
-    overflow: 'hidden',
-    paddingBottom: 8,
-  },
-  sun: {
-    position: 'absolute',
-    right: 36,
-    top: -8,
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: BrandColors.sun,
-    opacity: 0.32,
-  },
-  cloud: {
-    position: 'absolute',
-    right: 18,
-    top: 28,
-    width: 54,
-    height: 22,
-    borderRadius: 12,
-    backgroundColor: BrandColors.cloud,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  titleBlock: {
-    flex: 1,
-    zIndex: 1,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  subtitle: {
-    marginTop: 6,
-    fontSize: 14,
-    lineHeight: 20,
-    color: BrandColors.textMuted,
-  },
-  settingsBtn: {
-    zIndex: 1,
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  card: {
-    marginTop: 8,
-    backgroundColor: BrandColors.white,
-    borderRadius: 24,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: BrandColors.navy,
-    shadowOpacity: 0.07,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
-  },
-  avatarWrap: {
-    width: 92,
-    height: 92,
-  },
-  avatar: {
-    width: 92,
-    height: 92,
-    borderRadius: 46,
-    backgroundColor: '#F3D5B0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarLetter: {
-    fontSize: 36,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  cameraBadge: {
-    position: 'absolute',
-    right: 2,
-    bottom: 2,
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    backgroundColor: BrandColors.navy,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: BrandColors.white,
-  },
-  name: {
-    marginTop: 12,
-    fontSize: 22,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  bio: {
-    marginTop: 4,
-    fontSize: 13,
-    color: BrandColors.textMuted,
-    textAlign: 'center',
-  },
-  editBtn: {
-    marginTop: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: BrandColors.creamButton,
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  editText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  statsRow: {
-    marginTop: 18,
-    flexDirection: 'row',
-    width: '100%',
-  },
-  stat: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statDivider: {
-    width: StyleSheet.hairlineWidth,
-    alignSelf: 'stretch',
-    backgroundColor: BrandColors.divider,
-    marginRight: 6,
-  },
-  statBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  statLabel: {
-    marginTop: 2,
-    fontSize: 10,
-    lineHeight: 13,
-    textAlign: 'center',
-    color: BrandColors.textMuted,
-  },
-  sectionTitle: {
-    marginTop: 22,
-    marginBottom: 10,
-    fontSize: 18,
-    fontWeight: '800',
-    color: BrandColors.navy,
-  },
-  listCard: {
-    backgroundColor: BrandColors.white,
-    borderRadius: 20,
-    overflow: 'hidden',
-    shadowColor: BrandColors.navy,
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
-  },
-  footerRow: {
-    marginTop: 22,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  logout: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: BrandColors.priorityHighBg,
-    borderRadius: 24,
-    paddingHorizontal: 16,
-    minHeight: 44,
-  },
-  logoutText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: BrandColors.priorityHigh,
-  },
-  footerQuote: {
-    flex: 1,
-    fontSize: 12,
-    lineHeight: 16,
-    fontStyle: 'italic',
-    color: BrandColors.navy,
-  },
-  toast: {
-    position: 'absolute',
-    bottom: 16,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  toastText: {
-    color: BrandColors.white,
-    textAlign: 'center',
-    fontSize: 13,
-    fontWeight: '600',
-  },
-  pressed: {
-    opacity: 0.8,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+    },
+    header: {
+      overflow: 'hidden',
+      paddingBottom: 8,
+    },
+    sun: {
+      position: 'absolute',
+      right: 36,
+      top: -8,
+      width: 90,
+      height: 90,
+      borderRadius: 45,
+      backgroundColor: c.sun,
+      opacity: 0.32,
+    },
+    cloud: {
+      position: 'absolute',
+      right: 18,
+      top: 28,
+      width: 54,
+      height: 22,
+      borderRadius: 12,
+      backgroundColor: c.cloud,
+    },
+    titleRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: 12,
+    },
+    titleBlock: {
+      flex: 1,
+      zIndex: 1,
+    },
+    title: {
+      fontSize: 32,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    subtitle: {
+      marginTop: 6,
+      fontSize: 14,
+      lineHeight: 20,
+      color: c.textMuted,
+    },
+    settingsBtn: {
+      zIndex: 1,
+      width: 44,
+      height: 44,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    card: {
+      marginTop: 8,
+      backgroundColor: c.white,
+      borderRadius: 24,
+      padding: 20,
+      alignItems: 'center',
+      shadowColor: c.navy,
+      shadowOpacity: 0.07,
+      shadowRadius: 14,
+      shadowOffset: { width: 0, height: 6 },
+      elevation: 3,
+    },
+    avatarWrap: {
+      width: 92,
+      height: 92,
+    },
+    avatar: {
+      width: 92,
+      height: 92,
+      borderRadius: 46,
+      backgroundColor: c.avatarBg,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    avatarLetter: {
+      fontSize: 36,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    cameraBadge: {
+      position: 'absolute',
+      right: 2,
+      bottom: 2,
+      width: 26,
+      height: 26,
+      borderRadius: 13,
+      backgroundColor: c.navy,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: c.white,
+    },
+    name: {
+      marginTop: 12,
+      fontSize: 22,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    bio: {
+      marginTop: 4,
+      fontSize: 13,
+      color: c.textMuted,
+      textAlign: 'center',
+    },
+    editBtn: {
+      marginTop: 14,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      backgroundColor: c.creamButton,
+      borderRadius: 20,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+    },
+    editText: {
+      fontSize: 13,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    statsRow: {
+      marginTop: 18,
+      flexDirection: 'row',
+      width: '100%',
+    },
+    stat: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    statDivider: {
+      width: StyleSheet.hairlineWidth,
+      alignSelf: 'stretch',
+      backgroundColor: c.divider,
+      marginRight: 6,
+    },
+    statBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    statValue: {
+      fontSize: 18,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    statLabel: {
+      marginTop: 2,
+      fontSize: 10,
+      lineHeight: 13,
+      textAlign: 'center',
+      color: c.textMuted,
+    },
+    sectionTitle: {
+      marginTop: 22,
+      marginBottom: 10,
+      fontSize: 18,
+      fontWeight: '800',
+      color: c.navy,
+    },
+    listCard: {
+      backgroundColor: c.white,
+      borderRadius: 20,
+      overflow: 'hidden',
+      shadowColor: c.navy,
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      shadowOffset: { width: 0, height: 4 },
+      elevation: 2,
+    },
+    footerRow: {
+      marginTop: 22,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+    },
+    logout: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      backgroundColor: c.priorityHighBg,
+      borderRadius: 24,
+      paddingHorizontal: 16,
+      minHeight: 44,
+    },
+    logoutText: {
+      fontSize: 14,
+      fontWeight: '700',
+      color: c.priorityHigh,
+    },
+    footerQuote: {
+      flex: 1,
+      fontSize: 12,
+      lineHeight: 16,
+      fontStyle: 'italic',
+      color: c.navy,
+    },
+    toast: {
+      position: 'absolute',
+      bottom: 16,
+      backgroundColor: c.navy,
+      borderRadius: 12,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+    },
+    toastText: {
+      color: c.white,
+      textAlign: 'center',
+      fontSize: 13,
+      fontWeight: '600',
+    },
+    pressed: {
+      opacity: 0.8,
+    },
+  };
+}

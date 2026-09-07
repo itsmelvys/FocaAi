@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { BrandColors } from '@/constants/brand';
+import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const COLORS = ['#3BA55C', '#E67E22', '#7B61FF', '#14B8A6', '#EAB308', '#EC4899', '#3B82F6', '#A78BFA'];
 
 export function AddSubjectForm({ visible, onClose, onSave }) {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [name, setName] = useState('');
   const [color, setColor] = useState(COLORS[0]);
 
@@ -40,7 +42,7 @@ export function AddSubjectForm({ visible, onClose, onSave }) {
             value={name}
             onChangeText={setName}
             placeholder="Ex.: Filosofia"
-            placeholderTextColor={BrandColors.inputPlaceholder}
+            placeholderTextColor={colors.inputPlaceholder}
             style={styles.input}
           />
           <Text style={styles.label}>Cor</Text>
@@ -64,73 +66,75 @@ export function AddSubjectForm({ visible, onClose, onSave }) {
   );
 }
 
-const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(26, 43, 76, 0.35)',
-    justifyContent: 'flex-end',
-  },
-  sheet: {
-    backgroundColor: BrandColors.cream,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    padding: 24,
-    paddingBottom: 32,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: BrandColors.navy,
-    marginBottom: 16,
-  },
-  label: {
-    marginTop: 12,
-    marginBottom: 8,
-    fontSize: 13,
-    fontWeight: '700',
-    color: BrandColors.navy,
-  },
-  input: {
-    backgroundColor: BrandColors.white,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: BrandColors.inputBorder,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: BrandColors.navy,
-  },
-  swatches: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  swatch: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-  },
-  swatchActive: {
-    borderWidth: 3,
-    borderColor: BrandColors.navy,
-  },
-  save: {
-    marginTop: 20,
-    backgroundColor: BrandColors.navy,
-    borderRadius: 16,
-    minHeight: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  saveDisabled: {
-    opacity: 0.45,
-  },
-  saveText: {
-    color: BrandColors.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-});
+function makeStyles(c) {
+  return {
+    backdrop: {
+      flex: 1,
+      backgroundColor: c.overlay,
+      justifyContent: 'flex-end',
+    },
+    sheet: {
+      backgroundColor: c.cream,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      padding: 24,
+      paddingBottom: 32,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '800',
+      color: c.navy,
+      marginBottom: 16,
+    },
+    label: {
+      marginTop: 12,
+      marginBottom: 8,
+      fontSize: 13,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    input: {
+      backgroundColor: c.white,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: c.inputBorder,
+      paddingHorizontal: 14,
+      paddingVertical: 12,
+      fontSize: 15,
+      color: c.navy,
+    },
+    swatches: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 10,
+    },
+    swatch: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+    },
+    swatchActive: {
+      borderWidth: 3,
+      borderColor: c.navy,
+    },
+    save: {
+      marginTop: 20,
+      backgroundColor: c.navy,
+      borderRadius: 16,
+      minHeight: 52,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    saveDisabled: {
+      opacity: 0.45,
+    },
+    saveText: {
+      color: c.white,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+  };
+}

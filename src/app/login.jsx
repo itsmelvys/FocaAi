@@ -1,18 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
 import { IntroLandscape } from '@/components/intro/intro-landscape';
 import { LoginForm } from '@/components/login/login-form';
 import { LoginHeader } from '@/components/login/login-header';
-import { BrandColors } from '@/constants/brand';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 export default function LoginScreen() {
   const padding = useScreenPadding();
+  const styles = useThemedStyles(makeStyles);
 
   return (
     <View style={styles.screen}>
-      <StatusBar style="dark" />
       <View style={styles.sun} />
       <IntroLandscape />
 
@@ -40,27 +39,29 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: BrandColors.cream,
-    overflow: 'hidden',
-  },
-  flex: {
-    flex: 1,
-  },
-  sun: {
-    position: 'absolute',
-    top: -40,
-    right: -32,
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: BrandColors.orangeLight,
-    opacity: 0.4,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    zIndex: 1,
-  },
-});
+function makeStyles(c) {
+  return {
+    screen: {
+      flex: 1,
+      backgroundColor: c.cream,
+      overflow: 'hidden',
+    },
+    flex: {
+      flex: 1,
+    },
+    sun: {
+      position: 'absolute',
+      top: -40,
+      right: -32,
+      width: 140,
+      height: 140,
+      borderRadius: 70,
+      backgroundColor: c.orangeLight,
+      opacity: 0.4,
+    },
+    scrollContent: {
+      flexGrow: 1,
+      zIndex: 1,
+    },
+  };
+}

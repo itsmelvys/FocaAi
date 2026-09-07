@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrandLogo } from '@/components/brand/brand-logo';
-import { BrandColors } from '@/constants/brand';
+import { useThemedStyles } from '@/hooks/use-theme';
 
 export function LoginHeader() {
+  const styles = useThemedStyles(makeStyles);
+
   return (
     <View style={styles.container}>
       <BrandLogo />
@@ -14,17 +16,19 @@ export function LoginHeader() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginBottom: 28,
-  },
-  tagline: {
-    marginTop: 12,
-    fontSize: 15,
-    lineHeight: 22,
-    textAlign: 'center',
-    color: BrandColors.navy,
-    fontWeight: '500',
-  },
-});
+function makeStyles(c) {
+  return {
+    container: {
+      alignItems: 'center',
+      marginBottom: 28,
+    },
+    tagline: {
+      marginTop: 12,
+      fontSize: 15,
+      lineHeight: 22,
+      textAlign: 'center',
+      color: c.navy,
+      fontWeight: '500',
+    },
+  };
+}
