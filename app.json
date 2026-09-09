@@ -33,6 +33,14 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O FocaAí usa suas fotos para definir a foto de perfil.",
+          "cameraPermission": "O FocaAí usa a câmera para tirar a foto de perfil.",
+          "microphonePermission": false
+        }
       ]
     ],
     "experiments": {

@@ -1,11 +1,12 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { HomeLandscape } from '@/components/home/home-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { EditProfileForm } from '@/components/perfil/edit-profile-form';
+import { PhotoPicker } from '@/components/perfil/photo-picker';
 import { ProfileRow } from '@/components/perfil/profile-row';
 import { ThemePicker } from '@/components/perfil/theme-picker';
 import { SUBJECTS } from '@/constants/mock-subjects';
@@ -30,6 +31,7 @@ export default function PerfilScreen() {
   const styles = useThemedStyles(makeStyles);
   const [editOpen, setEditOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [photoOpen, setPhotoOpen] = useState(false);
   const [toast, setToast] = useState('');
 
   const profile = user || DEMO_PROFILE;
@@ -136,9 +138,17 @@ export default function PerfilScreen() {
         </View>
 
         <View style={styles.card}>
-          <View style={styles.avatarWrap}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Adicionar foto de perfil"
+            onPress={() => setPhotoOpen(true)}
+            style={({ pressed }) => [styles.avatarWrap, pressed && styles.pressed]}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarLetter}>{profile.name.charAt(0).toUpperCase()}</Text>
+              {profile.photoUri ? (
+                <Image source={{ uri: profile.photoUri }} style={styles.avatarImage} />
+              ) : (
+                <Text style={styles.avatarLetter}>{profile.name.charAt(0).toUpperCase()}</Text>
+              )}
             </View>
             <View style={styles.cameraBadge}>
               <AppIcon
@@ -147,7 +157,7 @@ export default function PerfilScreen() {
                 tintColor={colors.white}
               />
             </View>
-          </View>
+          </Pressable>
           <Text style={styles.name}>{profile.name}</Text>
           <Text style={styles.bio}>{profile.bio}</Text>
           <Pressable
@@ -216,6 +226,14 @@ export default function PerfilScreen() {
         <HomeLandscape />
       </ScrollView>
 
+      <PhotoPicker
+        visible={photoOpen}
+        hasPhoto={Boolean(profile.photoUri)}
+        onClose={() => setPhotoOpen(false)}
+        onPicked={(uri) => updateProfile({ photoUri: uri })}
+        onRemove={() => updateProfile({ photoUri: null })}
+        onError={showToast}
+      />
       <ThemePicker visible={themeOpen} onClose={() => setThemeOpen(false)} />
       <EditProfileForm
         visible={editOpen}
@@ -313,6 +331,11 @@ function makeStyles(c) {
       backgroundColor: c.avatarBg,
       alignItems: 'center',
       justifyContent: 'center',
+      overflow: 'hidden',
+    },
+    avatarImage: {
+      width: 92,
+      height: 92,
     },
     avatarLetter: {
       fontSize: 36,
@@ -323,6 +346,7 @@ function makeStyles(c) {
       position: 'absolute',
       right: 2,
       bottom: 2,
+      zIndex: 2,
       width: 26,
       height: 26,
       borderRadius: 13,
