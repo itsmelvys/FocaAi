@@ -1,11 +1,18 @@
 import { AppIcon } from '@/components/ui/app-icon';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
+
+const PRIORITY_LABEL = {
+  baixa: 'Baixa',
+  media: 'Média',
+  alta: 'Alta',
+};
 
 export function TaskCard({ task, onToggle }) {
   const { colors } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  const priorityLabel = PRIORITY_LABEL[task.priority];
 
   return (
     <Pressable
@@ -20,6 +27,11 @@ export function TaskCard({ task, onToggle }) {
         <Text style={styles.meta}>
           {task.subject}  ·  {task.date}
         </Text>
+        {priorityLabel ? (
+          <View style={styles.priorityWrap}>
+            <Text style={[styles.priority, { color: task.color }]}>{priorityLabel}</Text>
+          </View>
+        ) : null}
       </View>
 
       <View
@@ -45,14 +57,14 @@ function makeStyles(c) {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: c.white,
-      borderRadius: 16,
+      borderRadius: 18,
       overflow: 'hidden',
-      minHeight: 76,
+      minHeight: 84,
       paddingRight: 14,
       shadowColor: c.navy,
-      shadowOpacity: 0.06,
-      shadowRadius: 10,
-      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.07,
+      shadowRadius: 12,
+      shadowOffset: { width: 0, height: 6 },
       elevation: 2,
     },
     pressed: {
@@ -81,10 +93,22 @@ function makeStyles(c) {
       fontSize: 13,
       color: c.textMuted,
     },
+    priorityWrap: {
+      marginTop: 8,
+      alignSelf: 'flex-start',
+      backgroundColor: c.creamButton,
+      borderRadius: 12,
+      paddingHorizontal: 8,
+      paddingVertical: 3,
+    },
+    priority: {
+      fontSize: 11,
+      fontWeight: '700',
+    },
     checkbox: {
-      width: 22,
-      height: 22,
-      borderRadius: 11,
+      width: 24,
+      height: 24,
+      borderRadius: 12,
       borderWidth: 2,
       borderColor: c.divider,
       alignItems: 'center',

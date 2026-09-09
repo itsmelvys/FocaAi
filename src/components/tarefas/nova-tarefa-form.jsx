@@ -96,7 +96,7 @@ export function NovaTarefaForm() {
       <View style={styles.field}>
         <TextInput
           style={styles.input}
-          placeholder="Ex: Lista de exercícios"
+          placeholder="Ex.: lista de exercícios"
           placeholderTextColor={colors.inputPlaceholder}
           value={title}
           onChangeText={setTitle}
@@ -107,7 +107,7 @@ export function NovaTarefaForm() {
       <View style={[styles.field, styles.textArea]}>
         <TextInput
           style={[styles.input, styles.textAreaInput]}
-          placeholder="Detalhes sobre a tarefa..."
+          placeholder="Detalhes da tarefa..."
           placeholderTextColor={colors.inputPlaceholder}
           value={description}
           onChangeText={setDescription}

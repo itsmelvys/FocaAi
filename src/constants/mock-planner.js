@@ -56,7 +56,7 @@ export const WEEKDAY_BLOCKS = [
     id: 'history',
     time: '09:30',
     subject: 'História',
-    subtitle: 'Prova sobre Brasil República',
+    subtitle: 'Prova sobre a República no Brasil',
     duration: '1h 30min',
     color: BrandColors.history,
     done: true,
