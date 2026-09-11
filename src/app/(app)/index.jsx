@@ -1,6 +1,6 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { HomeHeader } from '@/components/home/home-header';
@@ -8,10 +8,29 @@ import { HomeLandscape } from '@/components/home/home-landscape';
 import { TaskRow } from '@/components/home/task-row';
 import { HOME_DAY_TASKS } from '@/constants/mock-tasks';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
+import { useTasks } from '@/hooks/use-tasks';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
-const WEEK_TOTAL = 7;
-const WEEK_BASE_DONE = 3;
+const SHORTCUTS = [
+  {
+    id: 'tarefas',
+    label: 'Tarefas',
+    route: '/(app)/tarefas',
+    icon: { ios: 'checklist', android: 'assignment', web: 'assignment' },
+  },
+  {
+    id: 'planner',
+    label: 'Planner',
+    route: '/(app)/planner',
+    icon: { ios: 'calendar', android: 'calendar_month', web: 'calendar_month' },
+  },
+  {
+    id: 'nova',
+    label: 'Nova tarefa',
+    route: '/(app)/nova-tarefa',
+    icon: { ios: 'plus', android: 'add', web: 'add' },
+  },
+];
 
 function formatCardDate() {
   const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
@@ -24,18 +43,17 @@ export default function HomeScreen() {
   const padding = useScreenPadding();
   const { colors } = useTheme();
   const styles = useThemedStyles(makeStyles);
-  const [tasks, setTasks] = useState(HOME_DAY_TASKS);
+  const { tasks } = useTasks();
+  const [dayTasks, setDayTasks] = useState(HOME_DAY_TASKS);
   const [toast, setToast] = useState('');
 
-  const weekDone = useMemo(() => {
-    const extra = tasks.filter((task) => task.done).length;
-    return Math.min(WEEK_TOTAL, WEEK_BASE_DONE + extra);
-  }, [tasks]);
-
-  const percent = Math.round((weekDone / WEEK_TOTAL) * 100);
+  const dayDone = dayTasks.filter((task) => task.done).length;
+  const weekDone = useMemo(() => tasks.filter((task) => task.done).length, [tasks]);
+  const weekTotal = Math.max(tasks.length, 1);
+  const percent = Math.round((weekDone / weekTotal) * 100);
 
   function toggleTask(id) {
-    setTasks((current) =>
+    setDayTasks((current) =>
       current.map((task) => (task.id === id ? { ...task, done: !task.done } : task)),
     );
   }
@@ -50,30 +68,64 @@ export default function HomeScreen() {
       <HomeHeader onBellPress={() => showToast('Nenhuma notificação por enquanto')} />
 
       <ScrollView
-        contentContainerStyle={[
-          styles.content,
-          {
-            paddingLeft: padding.left,
-            paddingRight: padding.right,
-            paddingBottom: 20,
-          },
-        ]}
-        showsVerticalScrollIndicator={false}
-        bounces>
+        contentContainerStyle={{
+          paddingLeft: padding.left,
+          paddingRight: padding.right,
+          paddingBottom: 28,
+        }}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.shortcuts}>
+          {SHORTCUTS.map((item) => (
+            <Pressable
+              key={item.id}
+              onPress={() => router.push(item.route)}
+              style={({ pressed }) => [styles.shortcut, pressed && styles.pressed]}>
+              <AppIcon name={item.icon} size={18} tintColor={colors.navy} />
+              <Text style={styles.shortcutText}>{item.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <View style={styles.summary}>
+          <View style={styles.checkCircle}>
+            <AppIcon
+              name={{ ios: 'checkmark', android: 'check', web: 'check' }}
+              size={16}
+              tintColor={colors.white}
+            />
+          </View>
+          <View style={styles.summaryBody}>
+            <Text style={styles.summaryText}>
+              {weekDone} de {weekTotal} {weekTotal === 1 ? 'tarefa da lista' : 'tarefas da lista'}
+            </Text>
+            <View style={styles.summaryRow}>
+              <View style={styles.progressTrack}>
+                <View style={[styles.progressFill, { width: `${percent}%` }]} />
+              </View>
+              <Text style={styles.percent}>{percent}%</Text>
+            </View>
+          </View>
+        </View>
+
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>Seu dia</Text>
+            <View>
+              <Text style={styles.cardTitle}>Seu dia</Text>
+              <Text style={styles.cardHint}>
+                {dayDone} de {dayTasks.length} concluídas hoje
+              </Text>
+            </View>
             <View style={styles.dateChip}>
               <Text style={styles.dateText}>{formatCardDate()}</Text>
             </View>
           </View>
 
-          {tasks.map((task, index) => (
+          {dayTasks.map((task, index) => (
             <TaskRow
               key={task.id}
               task={task}
               onToggle={toggleTask}
-              isLast={index === tasks.length - 1}
+              isLast={index === dayTasks.length - 1}
             />
           ))}
 
@@ -90,21 +142,11 @@ export default function HomeScreen() {
           </Pressable>
         </View>
 
-        <View style={styles.progressBlock}>
-          <HomeLandscape />
-          <View style={[styles.card, styles.progressCard]}>
-            <Text style={styles.cardTitle}>Progresso da semana</Text>
-            <View style={styles.progressTrack}>
-              <View style={[styles.progressFill, { width: `${percent}%` }]} />
-            </View>
-            <View style={styles.progressRow}>
-              <Text style={styles.progressLabel}>
-                {weekDone} de {WEEK_TOTAL} tarefas concluídas
-              </Text>
-              <Text style={styles.progressPercent}>{percent}%</Text>
-            </View>
-          </View>
+        <View style={styles.quote}>
+          <Text style={styles.quoteText}>“Disciplina hoje, conquistas amanhã.”</Text>
         </View>
+        <View style={styles.quoteLine} />
+        <HomeLandscape />
       </ScrollView>
 
       {toast ? (
@@ -122,35 +164,108 @@ function makeStyles(c) {
       flex: 1,
       backgroundColor: c.cream,
     },
-    content: {
-      gap: 4,
+    shortcuts: {
+      flexDirection: 'row',
+      gap: 8,
+      marginBottom: 14,
+    },
+    shortcut: {
+      flex: 1,
+      minHeight: 44,
+      borderRadius: 16,
+      backgroundColor: c.white,
+      borderWidth: 1,
+      borderColor: c.searchBorder,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 6,
+      paddingHorizontal: 8,
+    },
+    shortcutText: {
+      fontSize: 12,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    summary: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      backgroundColor: c.summaryBg,
+      borderRadius: 20,
+      padding: 14,
+      marginBottom: 16,
+    },
+    checkCircle: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.navy,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    summaryBody: {
+      flex: 1,
+    },
+    summaryText: {
+      fontSize: 14,
+      fontWeight: '700',
+      color: c.navy,
+    },
+    summaryRow: {
+      marginTop: 8,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+    },
+    progressTrack: {
+      flex: 1,
+      height: 8,
+      borderRadius: 8,
+      backgroundColor: c.white,
+      overflow: 'hidden',
+    },
+    progressFill: {
+      height: '100%',
+      backgroundColor: c.navy,
+      borderRadius: 8,
+    },
+    percent: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: c.navy,
     },
     card: {
       backgroundColor: c.white,
       borderRadius: 24,
       padding: 16,
       shadowColor: c.navy,
-      shadowOpacity: 0.08,
-      shadowRadius: 16,
-      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.07,
+      shadowRadius: 14,
+      shadowOffset: { width: 0, height: 6 },
       elevation: 3,
     },
     cardHeader: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: 4,
+      marginBottom: 6,
     },
     cardTitle: {
       fontSize: 18,
       fontWeight: '800',
       color: c.navy,
     },
+    cardHint: {
+      marginTop: 2,
+      fontSize: 13,
+      color: c.textMuted,
+    },
     dateChip: {
       backgroundColor: c.creamButton,
-      borderRadius: 8,
-      paddingHorizontal: 10,
-      paddingVertical: 6,
+      borderRadius: 14,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
     },
     dateText: {
       fontSize: 11,
@@ -159,9 +274,9 @@ function makeStyles(c) {
       letterSpacing: 0.4,
     },
     weekButton: {
-      marginTop: 10,
+      marginTop: 12,
       backgroundColor: c.creamButton,
-      borderRadius: 14,
+      borderRadius: 16,
       minHeight: 48,
       paddingHorizontal: 16,
       flexDirection: 'row',
@@ -173,41 +288,27 @@ function makeStyles(c) {
       fontWeight: '600',
       color: c.navy,
     },
-    pressed: {
-      opacity: 0.8,
+    quote: {
+      marginTop: 20,
+      backgroundColor: c.quoteBg,
+      borderRadius: 18,
+      paddingVertical: 14,
+      paddingHorizontal: 16,
     },
-    progressBlock: {
-      marginTop: 8,
-    },
-    progressCard: {
-      marginTop: -42,
-    },
-    progressTrack: {
-      marginTop: 14,
-      height: 10,
-      borderRadius: 8,
-      backgroundColor: c.progressTrack,
-      overflow: 'hidden',
-    },
-    progressFill: {
-      height: '100%',
-      backgroundColor: c.math,
-      borderRadius: 8,
-    },
-    progressRow: {
-      marginTop: 10,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    progressLabel: {
-      fontSize: 13,
+    quoteText: {
+      fontSize: 14,
+      fontWeight: '600',
+      fontStyle: 'italic',
       color: c.navy,
+      textAlign: 'center',
     },
-    progressPercent: {
-      fontSize: 16,
-      fontWeight: '800',
-      color: c.math,
+    quoteLine: {
+      width: 72,
+      height: 3,
+      borderRadius: 2,
+      backgroundColor: c.orange,
+      alignSelf: 'center',
+      marginTop: 8,
     },
     toast: {
       position: 'absolute',
@@ -221,6 +322,9 @@ function makeStyles(c) {
       textAlign: 'center',
       fontSize: 13,
       fontWeight: '600',
+    },
+    pressed: {
+      opacity: 0.8,
     },
   };
 }

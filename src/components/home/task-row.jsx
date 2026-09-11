@@ -18,8 +18,8 @@ export function TaskRow({ task, onToggle, isLast }) {
       </View>
 
       <View style={styles.texts}>
-        <Text style={styles.title}>{task.title}</Text>
-        <Text style={styles.subtitle}>{task.subtitle}</Text>
+        <Text style={[styles.title, task.done && styles.titleDone]}>{task.title}</Text>
+        <Text style={[styles.subtitle, task.done && styles.titleDone]}>{task.subtitle}</Text>
         <Text style={[styles.meta, { color: task.color }]}>{task.meta}</Text>
       </View>
 
@@ -50,7 +50,7 @@ function makeStyles(c) {
     },
     rowBorder: {
       borderBottomWidth: StyleSheet.hairlineWidth,
-      borderBottomColor: c.progressTrack,
+      borderBottomColor: c.divider,
     },
     pressed: {
       opacity: 0.75,
@@ -70,6 +70,10 @@ function makeStyles(c) {
       fontWeight: '700',
       color: c.navy,
     },
+    titleDone: {
+      textDecorationLine: 'line-through',
+      opacity: 0.55,
+    },
     subtitle: {
       marginTop: 2,
       fontSize: 13,
@@ -81,9 +85,9 @@ function makeStyles(c) {
       fontWeight: '600',
     },
     checkbox: {
-      width: 22,
-      height: 22,
-      borderRadius: 11,
+      width: 24,
+      height: 24,
+      borderRadius: 12,
       borderWidth: 2,
       borderColor: c.divider,
       alignItems: 'center',
