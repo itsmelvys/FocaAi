@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { useAuth } from '@/hooks/use-auth';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
@@ -170,9 +171,9 @@ function makeStyles(c) {
       backgroundColor: c.white,
       borderWidth: 1,
       borderColor: c.inputBorder,
-      borderRadius: 12,
+      borderRadius: Layout.fieldRadius,
       paddingHorizontal: 14,
-      height: 52,
+      height: Layout.fieldHeight,
     },
     inputIcon: {
       marginRight: 10,
@@ -187,8 +188,8 @@ function makeStyles(c) {
     },
     primaryButton: {
       backgroundColor: c.navy,
-      borderRadius: 12,
-      height: 52,
+      borderRadius: Layout.buttonRadius,
+      height: Layout.buttonHeight,
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: 4,
@@ -227,8 +228,8 @@ function makeStyles(c) {
       backgroundColor: c.white,
       borderWidth: 1.5,
       borderColor: c.navy,
-      borderRadius: 12,
-      height: 52,
+      borderRadius: Layout.buttonRadius,
+      height: Layout.buttonHeight,
       gap: 10,
     },
     googleLogo: {

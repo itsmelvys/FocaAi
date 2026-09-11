@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { useAuth } from '@/hooks/use-auth';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
@@ -159,9 +160,9 @@ function makeStyles(c) {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: c.white,
-      borderRadius: 16,
+      borderRadius: Layout.fieldRadius,
       paddingHorizontal: 16,
-      minHeight: 56,
+      minHeight: Layout.fieldHeight,
       shadowColor: c.navy,
       shadowOpacity: 0.06,
       shadowRadius: 10,
@@ -187,8 +188,8 @@ function makeStyles(c) {
     primaryButton: {
       marginTop: 8,
       backgroundColor: c.navy,
-      borderRadius: 16,
-      minHeight: 54,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },

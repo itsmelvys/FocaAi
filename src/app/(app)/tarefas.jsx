@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import { HomeLandscape } from '@/components/home/home-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { TaskCard } from '@/components/tarefas/task-card';
+import { Layout } from '@/constants/layout';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTasks } from '@/hooks/use-tasks';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
@@ -174,9 +175,9 @@ function makeStyles(c) {
     },
     addButton: {
       zIndex: 1,
-      width: 44,
-      height: 44,
-      borderRadius: 14,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
+      borderRadius: Layout.iconRadius,
       backgroundColor: c.navy,
       alignItems: 'center',
       justifyContent: 'center',
@@ -188,12 +189,15 @@ function makeStyles(c) {
       paddingBottom: 12,
     },
     pill: {
+      minHeight: Layout.pillHeight,
       paddingHorizontal: 16,
       paddingVertical: 8,
-      borderRadius: 20,
+      borderRadius: Layout.pillRadius,
       backgroundColor: c.white,
       borderWidth: 1,
       borderColor: c.searchBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     pillActive: {
       backgroundColor: c.navy,

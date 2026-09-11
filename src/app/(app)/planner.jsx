@@ -16,6 +16,7 @@ import {
   sameDay,
   weekDaysFrom,
 } from '@/constants/mock-planner';
+import { Layout } from '@/constants/layout';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
@@ -263,9 +264,9 @@ function makeStyles(c) {
       color: c.textMuted,
     },
     calendarBtn: {
-      width: 44,
-      height: 44,
-      borderRadius: 14,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
+      borderRadius: Layout.iconRadius,
       backgroundColor: c.creamButton,
       alignItems: 'center',
       justifyContent: 'center',
@@ -299,9 +300,9 @@ function makeStyles(c) {
       textAlign: 'center',
     },
     numberBox: {
-      width: 44,
-      height: 44,
-      borderRadius: 12,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
+      borderRadius: Layout.iconRadius,
       overflow: 'hidden',
       backgroundColor: c.creamButton,
       alignItems: 'center',
@@ -311,10 +312,10 @@ function makeStyles(c) {
       backgroundColor: c.navy,
     },
     dayNumber: {
-      width: 44,
-      height: 44,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
       fontSize: 18,
-      lineHeight: 44,
+      lineHeight: Layout.iconButton,
       fontWeight: '800',
       color: c.navy,
       textAlign: 'center',
@@ -347,10 +348,12 @@ function makeStyles(c) {
       color: c.navy,
     },
     todayBtn: {
+      minHeight: Layout.pillHeight,
       backgroundColor: c.creamButton,
-      borderRadius: 16,
+      borderRadius: Layout.pillRadius,
       paddingHorizontal: 14,
-      paddingVertical: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     todayText: {
       fontSize: 13,
@@ -416,8 +419,9 @@ function makeStyles(c) {
     fab: {
       position: 'absolute',
       bottom: 16,
-      minHeight: 52,
-      borderRadius: 26,
+      minHeight: Layout.buttonHeight,
+      paddingHorizontal: 20,
+      borderRadius: Layout.buttonRadius,
       backgroundColor: c.navy,
       flexDirection: 'row',
       alignItems: 'center',

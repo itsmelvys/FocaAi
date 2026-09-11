@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
+import { Layout } from '@/constants/layout';
 import { SUBJECTS } from '@/constants/mock-tasks';
 import { useTasks } from '@/hooks/use-tasks';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
@@ -213,8 +214,8 @@ function makeStyles(c) {
       alignItems: 'center',
       borderWidth: 1,
       borderColor: c.inputBorder,
-      borderRadius: 12,
-      minHeight: 48,
+      borderRadius: Layout.fieldRadius,
+      minHeight: Layout.fieldHeight,
       paddingHorizontal: 12,
       gap: 8,
     },
@@ -247,8 +248,8 @@ function makeStyles(c) {
     },
     priorityChip: {
       flex: 1,
-      minHeight: 40,
-      borderRadius: 12,
+      minHeight: Layout.pillHeight,
+      borderRadius: Layout.pillRadius,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -263,8 +264,8 @@ function makeStyles(c) {
     saveButton: {
       marginTop: 16,
       backgroundColor: c.navy,
-      borderRadius: 14,
-      minHeight: 52,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -295,8 +296,9 @@ function makeStyles(c) {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 10,
+      minHeight: Layout.buttonHeight,
       paddingHorizontal: 16,
-      paddingVertical: 14,
+      paddingVertical: 0,
     },
     sheetText: {
       fontSize: 15,

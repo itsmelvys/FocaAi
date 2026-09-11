@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import { HomeHeader } from '@/components/home/home-header';
 import { HomeLandscape } from '@/components/home/home-landscape';
 import { TaskRow } from '@/components/home/task-row';
+import { Layout } from '@/constants/layout';
 import { HOME_DAY_TASKS } from '@/constants/mock-tasks';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTasks } from '@/hooks/use-tasks';
@@ -171,8 +172,8 @@ function makeStyles(c) {
     },
     shortcut: {
       flex: 1,
-      minHeight: 44,
-      borderRadius: 16,
+      minHeight: Layout.buttonHeight,
+      borderRadius: Layout.buttonRadius,
       backgroundColor: c.white,
       borderWidth: 1,
       borderColor: c.searchBorder,
@@ -262,10 +263,12 @@ function makeStyles(c) {
       color: c.textMuted,
     },
     dateChip: {
+      minHeight: Layout.pillHeight,
       backgroundColor: c.creamButton,
-      borderRadius: 14,
+      borderRadius: Layout.pillRadius,
       paddingHorizontal: 12,
-      paddingVertical: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     dateText: {
       fontSize: 11,
@@ -276,8 +279,8 @@ function makeStyles(c) {
     weekButton: {
       marginTop: 12,
       backgroundColor: c.creamButton,
-      borderRadius: 16,
-      minHeight: 48,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       paddingHorizontal: 16,
       flexDirection: 'row',
       alignItems: 'center',

@@ -4,4 +4,12 @@ export const Layout = {
   afterHomeIndicator: 12,
   tabBarTop: 10,
   tabItemMinHeight: 52,
+  buttonHeight: 52,
+  buttonRadius: 16,
+  iconButton: 44,
+  iconRadius: 14,
+  pillHeight: 36,
+  pillRadius: 16,
+  fieldHeight: 48,
+  fieldRadius: 16,
 };

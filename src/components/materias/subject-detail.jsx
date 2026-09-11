@@ -1,6 +1,7 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onToggleDone }) {
@@ -116,8 +117,8 @@ function makeStyles(c) {
       alignItems: 'center',
       gap: 8,
       backgroundColor: c.white,
-      borderRadius: 14,
-      minHeight: 48,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       paddingHorizontal: 14,
     },
     actionText: {

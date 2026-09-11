@@ -1,5 +1,6 @@
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { THEME_OPTIONS, useTheme } from '@/hooks/use-theme';
 
 export function ThemePicker({ visible, onClose }) {
@@ -64,8 +65,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   option: {
-    minHeight: 52,
-    borderRadius: 16,
+    minHeight: Layout.buttonHeight,
+    borderRadius: Layout.buttonRadius,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',

@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { AppIcon } from '@/components/ui/app-icon';
 import { Image, Pressable, Text, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { BackButton } from '@/components/navigation/back-button';
 import { useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
@@ -149,9 +150,9 @@ function makeStyles(c) {
       color: c.textMuted,
     },
     bell: {
-      width: 44,
-      height: 44,
-      borderRadius: 14,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
+      borderRadius: Layout.iconRadius,
       backgroundColor: c.creamButton,
       alignItems: 'center',
       justifyContent: 'center',

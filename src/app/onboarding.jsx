@@ -3,6 +3,7 @@ import { AppIcon } from '@/components/ui/app-icon';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { OnboardingScene } from '@/components/onboarding/onboarding-scene';
 import { BackButton } from '@/components/navigation/back-button';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
@@ -151,8 +152,8 @@ function makeStyles(c) {
     },
     nextButton: {
       backgroundColor: c.navy,
-      borderRadius: 14,
-      minHeight: 54,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       paddingHorizontal: 20,
       flexDirection: 'row',
       alignItems: 'center',

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { PLANNER_DURATIONS, PLANNER_TIMES } from '@/constants/mock-planner';
 import { SUBJECTS } from '@/constants/mock-tasks';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
@@ -135,10 +136,12 @@ function makeStyles(c) {
       gap: 8,
     },
     chip: {
+      minHeight: Layout.pillHeight,
       paddingHorizontal: 12,
-      paddingVertical: 8,
-      borderRadius: 16,
+      borderRadius: Layout.pillRadius,
       backgroundColor: c.creamButton,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     chipActive: {
       backgroundColor: c.navy,
@@ -153,19 +156,19 @@ function makeStyles(c) {
     },
     input: {
       backgroundColor: c.white,
-      borderRadius: 14,
+      borderRadius: Layout.fieldRadius,
       borderWidth: 1,
       borderColor: c.inputBorder,
       paddingHorizontal: 14,
-      paddingVertical: 12,
+      minHeight: Layout.fieldHeight,
       fontSize: 15,
       color: c.navy,
     },
     save: {
       marginTop: 20,
       backgroundColor: c.navy,
-      borderRadius: 16,
-      minHeight: 52,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },

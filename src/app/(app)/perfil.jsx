@@ -9,6 +9,7 @@ import { EditProfileForm } from '@/components/perfil/edit-profile-form';
 import { PhotoPicker } from '@/components/perfil/photo-picker';
 import { ProfileRow } from '@/components/perfil/profile-row';
 import { ThemePicker } from '@/components/perfil/theme-picker';
+import { Layout } from '@/constants/layout';
 import { SUBJECTS } from '@/constants/mock-subjects';
 import { DEMO_PROFILE, useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
@@ -303,8 +304,10 @@ function makeStyles(c) {
     },
     settingsBtn: {
       zIndex: 1,
-      width: 44,
-      height: 44,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
+      borderRadius: Layout.iconRadius,
+      backgroundColor: c.creamButton,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -372,11 +375,12 @@ function makeStyles(c) {
       marginTop: 14,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: 6,
       backgroundColor: c.creamButton,
-      borderRadius: 20,
+      borderRadius: Layout.pillRadius,
+      minHeight: Layout.pillHeight,
       paddingHorizontal: 16,
-      paddingVertical: 8,
     },
     editText: {
       fontSize: 13,
@@ -441,11 +445,12 @@ function makeStyles(c) {
     logout: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: 8,
       backgroundColor: c.priorityHighBg,
-      borderRadius: 24,
+      borderRadius: Layout.buttonRadius,
       paddingHorizontal: 16,
-      minHeight: 44,
+      minHeight: Layout.buttonHeight,
     },
     logoutText: {
       fontSize: 14,

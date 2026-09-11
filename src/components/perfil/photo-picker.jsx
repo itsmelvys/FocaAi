@@ -1,6 +1,7 @@
 import * as ImagePicker from 'expo-image-picker';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { useTheme } from '@/hooks/use-theme';
 
 const OPTIONS = {
@@ -114,8 +115,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   option: {
-    minHeight: 52,
-    borderRadius: 16,
+    minHeight: Layout.buttonHeight,
+    borderRadius: Layout.buttonRadius,
     alignItems: 'center',
     justifyContent: 'center',
   },

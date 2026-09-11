@@ -8,6 +8,7 @@ import { AddSubjectForm } from '@/components/materias/add-subject-form';
 import { SubjectCard } from '@/components/materias/subject-card';
 import { SubjectDetail } from '@/components/materias/subject-detail';
 import { BackButton } from '@/components/navigation/back-button';
+import { Layout } from '@/constants/layout';
 import { SUBJECTS } from '@/constants/mock-subjects';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
@@ -110,10 +111,9 @@ export default function MateriasScreen() {
             style={({ pressed }) => [styles.addBtn, pressed && styles.pressed]}>
             <AppIcon
               name={{ ios: 'plus', android: 'add', web: 'add' }}
-              size={16}
+              size={20}
               tintColor={colors.white}
             />
-            <Text style={styles.addText}>Adicionar{'\n'}matéria</Text>
           </Pressable>
         </View>
       </View>
@@ -233,29 +233,20 @@ function makeStyles(c) {
     },
     addBtn: {
       zIndex: 1,
+      width: Layout.iconButton,
+      height: Layout.iconButton,
+      borderRadius: Layout.iconRadius,
       backgroundColor: c.navy,
-      borderRadius: 22,
-      paddingHorizontal: 12,
-      paddingVertical: 10,
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth: 92,
-    },
-    addText: {
-      marginTop: 2,
-      color: c.white,
-      fontSize: 11,
-      fontWeight: '700',
-      textAlign: 'center',
-      lineHeight: 14,
     },
     search: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 8,
       backgroundColor: c.white,
-      borderRadius: 24,
-      minHeight: 48,
+      borderRadius: Layout.fieldRadius,
+      minHeight: Layout.fieldHeight,
       paddingHorizontal: 14,
       borderWidth: 1,
       borderColor: c.searchBorder,
@@ -276,12 +267,15 @@ function makeStyles(c) {
       paddingRight: 8,
     },
     pill: {
+      minHeight: Layout.pillHeight,
       paddingHorizontal: 16,
       paddingVertical: 8,
-      borderRadius: 20,
+      borderRadius: Layout.pillRadius,
       backgroundColor: c.white,
       borderWidth: 1,
       borderColor: c.inputBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     pillActive: {
       backgroundColor: c.navy,

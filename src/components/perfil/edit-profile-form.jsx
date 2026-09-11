@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { useThemedStyles } from '@/hooks/use-theme';
 
 export function EditProfileForm({ visible, profile, onClose, onSave }) {
@@ -87,19 +88,19 @@ function makeStyles(c) {
     },
     input: {
       backgroundColor: c.white,
-      borderRadius: 14,
+      borderRadius: Layout.fieldRadius,
       borderWidth: 1,
       borderColor: c.inputBorder,
       paddingHorizontal: 14,
-      paddingVertical: 12,
+      minHeight: Layout.fieldHeight,
       fontSize: 15,
       color: c.navy,
     },
     save: {
       marginTop: 20,
       backgroundColor: c.navy,
-      borderRadius: 16,
-      minHeight: 52,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { Layout } from '@/constants/layout';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const COLORS = ['#3BA55C', '#E67E22', '#7B61FF', '#14B8A6', '#EAB308', '#EC4899', '#3B82F6', '#A78BFA'];
@@ -95,11 +96,11 @@ function makeStyles(c) {
     },
     input: {
       backgroundColor: c.white,
-      borderRadius: 14,
+      borderRadius: Layout.fieldRadius,
       borderWidth: 1,
       borderColor: c.inputBorder,
       paddingHorizontal: 14,
-      paddingVertical: 12,
+      minHeight: Layout.fieldHeight,
       fontSize: 15,
       color: c.navy,
     },
@@ -120,8 +121,8 @@ function makeStyles(c) {
     save: {
       marginTop: 20,
       backgroundColor: c.navy,
-      borderRadius: 16,
-      minHeight: 52,
+      borderRadius: Layout.buttonRadius,
+      minHeight: Layout.buttonHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },
