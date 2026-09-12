@@ -30,6 +30,7 @@ export default function MateriasScreen() {
   const [subjects, setSubjects] = useState(SUBJECTS);
   const [addOpen, setAddOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [editing, setEditing] = useState(null);
 
   const visible = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -58,6 +59,19 @@ export default function MateriasScreen() {
       },
       ...current,
     ]);
+  }
+
+  function updateSubject(patch) {
+    if (!editing) {
+      return;
+    }
+
+    const id = editing.id;
+    setSubjects((current) =>
+      current.map((item) => (item.id === id ? { ...item, ...patch } : item)),
+    );
+    setSelected((current) => (current?.id === id ? { ...current, ...patch } : current));
+    setEditing(null);
   }
 
   function toggleFavorite(id) {
@@ -179,10 +193,17 @@ export default function MateriasScreen() {
       </ScrollView>
 
       <AddSubjectForm visible={addOpen} onClose={() => setAddOpen(false)} onSave={addSubject} />
+      <AddSubjectForm
+        visible={Boolean(editing)}
+        subject={editing}
+        onClose={() => setEditing(null)}
+        onSave={updateSubject}
+      />
       <SubjectDetail
         subject={selected}
-        visible={Boolean(selected)}
+        visible={Boolean(selected) && !editing}
         onClose={() => setSelected(null)}
+        onEdit={setEditing}
         onToggleFavorite={toggleFavorite}
         onToggleDone={toggleDone}
       />

@@ -4,7 +4,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Layout } from '@/constants/layout';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
-export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onToggleDone }) {
+export function SubjectDetail({ subject, visible, onClose, onEdit, onToggleFavorite, onToggleDone }) {
   const { colors } = useTheme();
   const styles = useThemedStyles(makeStyles);
 
@@ -36,6 +36,16 @@ export function SubjectDetail({ subject, visible, onClose, onToggleFavorite, onT
           </Text>
 
           <View style={styles.actions}>
+            <Pressable
+              onPress={() => onEdit(subject)}
+              style={({ pressed }) => [styles.action, pressed && styles.pressed]}>
+              <AppIcon
+                name={{ ios: 'pencil', android: 'edit', web: 'edit' }}
+                size={18}
+                tintColor={colors.navy}
+              />
+              <Text style={styles.actionText}>Editar informações</Text>
+            </Pressable>
             <Pressable
               onPress={() => onToggleFavorite(subject.id)}
               style={({ pressed }) => [styles.action, pressed && styles.pressed]}>

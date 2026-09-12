@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Keyboard, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { Layout } from '@/constants/layout';
@@ -6,11 +6,28 @@ import { useTheme, useThemedStyles } from '@/hooks/use-theme';
 
 const COLORS = ['#3BA55C', '#E67E22', '#7B61FF', '#14B8A6', '#EAB308', '#EC4899', '#3B82F6', '#A78BFA'];
 
-export function AddSubjectForm({ visible, onClose, onSave }) {
+export function AddSubjectForm({ visible, subject, onClose, onSave }) {
   const { colors } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  const isEdit = Boolean(subject);
   const [name, setName] = useState('');
   const [color, setColor] = useState(COLORS[0]);
+
+  const palette = useMemo(() => {
+    if (subject?.color && !COLORS.includes(subject.color)) {
+      return [subject.color, ...COLORS];
+    }
+    return COLORS;
+  }, [subject]);
+
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+
+    setName(subject?.name ?? '');
+    setColor(subject?.color ?? COLORS[0]);
+  }, [subject, visible]);
 
   function handleSave() {
     const trimmed = name.trim();
@@ -19,14 +36,21 @@ export function AddSubjectForm({ visible, onClose, onSave }) {
     }
 
     Keyboard.dismiss();
-    onSave({
-      name: trimmed,
-      color,
-      contents: 0,
-      status: 'studying',
-      favorite: false,
-      icon: { ios: 'book', android: 'menu-book', web: 'menu-book' },
-    });
+    if (isEdit) {
+      onSave({
+        name: trimmed,
+        color,
+      });
+    } else {
+      onSave({
+        name: trimmed,
+        color,
+        contents: 0,
+        status: 'studying',
+        favorite: false,
+        icon: { ios: 'book', android: 'menu-book', web: 'menu-book' },
+      });
+    }
     setName('');
     setColor(COLORS[0]);
     onClose();
@@ -37,7 +61,7 @@ export function AddSubjectForm({ visible, onClose, onSave }) {
       <View style={styles.backdrop}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
         <View style={styles.sheet}>
-          <Text style={styles.title}>Adicionar matéria</Text>
+          <Text style={styles.title}>{isEdit ? 'Editar matéria' : 'Adicionar matéria'}</Text>
           <Text style={styles.label}>Nome</Text>
           <TextInput
             value={name}
@@ -48,7 +72,7 @@ export function AddSubjectForm({ visible, onClose, onSave }) {
           />
           <Text style={styles.label}>Cor</Text>
           <View style={styles.swatches}>
-            {COLORS.map((item) => (
+            {palette.map((item) => (
               <Pressable
                 key={item}
                 onPress={() => setColor(item)}
@@ -59,7 +83,7 @@ export function AddSubjectForm({ visible, onClose, onSave }) {
           <Pressable
             onPress={handleSave}
             style={({ pressed }) => [styles.save, pressed && styles.pressed, !name.trim() && styles.saveDisabled]}>
-            <Text style={styles.saveText}>Salvar matéria</Text>
+            <Text style={styles.saveText}>{isEdit ? 'Salvar alterações' : 'Salvar matéria'}</Text>
           </Pressable>
         </View>
       </View>
