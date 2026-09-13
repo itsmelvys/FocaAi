@@ -32,7 +32,7 @@ export function TaskRow({ task, onToggle, isLast }) {
           <AppIcon
             name={{ ios: 'checkmark', android: 'check', web: 'check' }}
             size={12}
-            tintColor={colors.white}
+            tintColor={colors.onColor}
           />
         ) : null}
       </View>

@@ -375,7 +375,7 @@ function makeStyles(c) {
       right: 0,
       bottom: 0,
       height: 92,
-      backgroundColor: c.navy,
+      backgroundColor: c.landscapeBlue,
       overflow: 'hidden',
     },
     wave: {

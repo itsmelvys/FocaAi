@@ -21,7 +21,7 @@ export function SubjectDetail({ subject, visible, onClose, onEdit, onToggleFavor
         <View style={styles.sheet}>
           <View style={styles.header}>
             <View style={[styles.icon, { backgroundColor: subject.color }]}>
-              <AppIcon name={subject.icon} size={22} tintColor={colors.white} />
+              <AppIcon name={subject.icon} size={22} tintColor={colors.onColor} />
             </View>
             <View style={styles.texts}>
               <Text style={styles.title}>{subject.name}</Text>

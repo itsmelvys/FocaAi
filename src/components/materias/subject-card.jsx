@@ -14,7 +14,7 @@ export function SubjectCard({ subject, onPress }) {
       onPress={() => onPress(subject)}
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
       <View style={[styles.icon, { backgroundColor: subject.color }]}>
-        <AppIcon name={subject.icon} size={18} tintColor={colors.white} />
+        <AppIcon name={subject.icon} size={18} tintColor={colors.onColor} />
       </View>
       <View style={styles.texts}>
         <Text style={styles.title} numberOfLines={1}>
