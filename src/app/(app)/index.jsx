@@ -4,7 +4,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { HomeHeader } from '@/components/home/home-header';
-import { HomeLandscape } from '@/components/home/home-landscape';
+import { HomeLandscape } from '@/components/brand/home-landscape';
 import { TaskRow } from '@/components/home/task-row';
 import { Layout } from '@/constants/layout';
 import { HOME_DAY_TASKS } from '@/constants/mock-tasks';
@@ -70,9 +70,10 @@ export default function HomeScreen() {
 
       <ScrollView
         contentContainerStyle={{
+          flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 28,
+          paddingBottom: 8,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.shortcuts}>

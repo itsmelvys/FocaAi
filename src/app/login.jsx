@@ -1,8 +1,8 @@
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
-import { IntroLandscape } from '@/components/intro/intro-landscape';
-import { LoginForm } from '@/components/login/login-form';
-import { LoginHeader } from '@/components/login/login-header';
+import { LoginForm } from '@/components/auth/login-form';
+import { LoginHeader } from '@/components/auth/login-header';
+import { IntroLandscape } from '@/components/brand/intro-landscape';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useThemedStyles } from '@/hooks/use-theme';
 

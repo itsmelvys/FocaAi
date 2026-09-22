@@ -1,8 +1,8 @@
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { CadastroForm } from '@/components/cadastro/cadastro-form';
-import { IntroLandscape } from '@/components/intro/intro-landscape';
+import { CadastroForm } from '@/components/auth/cadastro-form';
+import { IntroLandscape } from '@/components/brand/intro-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useThemedStyles } from '@/hooks/use-theme';

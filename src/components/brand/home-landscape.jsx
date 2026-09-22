@@ -37,7 +37,7 @@ function makeStyles(c) {
   return {
     wrap: {
       height: 130,
-      marginTop: 4,
+      marginTop: 'auto',
     },
     sky: {
       ...StyleSheet.absoluteFillObject,
@@ -158,13 +158,13 @@ function makeStyles(c) {
       width: 10,
       height: 12,
       borderRadius: 6,
-      backgroundColor: c.navy,
+      backgroundColor: c.landscapeBlue,
       opacity: 0.55,
     },
     door: {
       width: 12,
       height: 16,
-      backgroundColor: c.navy,
+      backgroundColor: c.landscapeBlue,
       borderTopLeftRadius: 6,
       borderTopRightRadius: 6,
     },

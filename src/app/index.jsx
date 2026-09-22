@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 import { BrandLogo } from '@/components/brand/brand-logo';
-import { IntroLandscape } from '@/components/intro/intro-landscape';
+import { IntroLandscape } from '@/components/brand/intro-landscape';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useThemedStyles } from '@/hooks/use-theme';
 

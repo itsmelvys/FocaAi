@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { HomeLandscape } from '@/components/home/home-landscape';
+import { HomeLandscape } from '@/components/brand/home-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { PlanSlotForm } from '@/components/planner/plan-slot-form';
 import { ScheduleItem } from '@/components/planner/schedule-item';
@@ -134,6 +134,7 @@ export default function PlannerScreen() {
 
       <ScrollView
         contentContainerStyle={{
+          flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
           paddingBottom: 96,

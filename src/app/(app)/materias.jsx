@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { HomeLandscape } from '@/components/home/home-landscape';
+import { HomeLandscape } from '@/components/brand/home-landscape';
 import { AddSubjectForm } from '@/components/materias/add-subject-form';
 import { SubjectCard } from '@/components/materias/subject-card';
 import { SubjectDetail } from '@/components/materias/subject-detail';
@@ -134,6 +134,7 @@ export default function MateriasScreen() {
 
       <ScrollView
         contentContainerStyle={{
+          flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
           paddingBottom: 24,

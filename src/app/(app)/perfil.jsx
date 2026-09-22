@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { HomeLandscape } from '@/components/home/home-landscape';
+import { HomeLandscape } from '@/components/brand/home-landscape';
 import { BackButton } from '@/components/navigation/back-button';
 import { EditProfileForm } from '@/components/perfil/edit-profile-form';
 import { PhotoPicker } from '@/components/perfil/photo-picker';
@@ -109,10 +109,11 @@ export default function PerfilScreen() {
     <View style={styles.screen}>
       <ScrollView
         contentContainerStyle={{
+          flexGrow: 1,
           paddingTop: padding.top,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 28,
+          paddingBottom: 8,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
