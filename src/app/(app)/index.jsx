@@ -69,11 +69,12 @@ export default function HomeScreen() {
       <HomeHeader onBellPress={() => showToast('Nenhuma notificação por enquanto')} />
 
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={{
           flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 8,
+          paddingBottom: 4,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.shortcuts}>
@@ -83,7 +84,9 @@ export default function HomeScreen() {
               onPress={() => router.push(item.route)}
               style={({ pressed }) => [styles.shortcut, pressed && styles.pressed]}>
               <AppIcon name={item.icon} size={18} tintColor={colors.navy} />
-              <Text style={styles.shortcutText}>{item.label}</Text>
+              <Text style={styles.shortcutText} numberOfLines={1}>
+                {item.label}
+              </Text>
             </Pressable>
           ))}
         </View>
@@ -93,7 +96,7 @@ export default function HomeScreen() {
             <AppIcon
               name={{ ios: 'checkmark', android: 'check', web: 'check' }}
               size={16}
-              tintColor={colors.white}
+              tintColor={colors.onColor}
             />
           </View>
           <View style={styles.summaryBody}>
@@ -148,6 +151,7 @@ export default function HomeScreen() {
           <Text style={styles.quoteText}>“Disciplina hoje, conquistas amanhã.”</Text>
         </View>
         <View style={styles.quoteLine} />
+        <View style={styles.landscapeSpace} />
         <HomeLandscape />
       </ScrollView>
 
@@ -166,6 +170,13 @@ function makeStyles(c) {
       flex: 1,
       backgroundColor: c.cream,
     },
+    scroll: {
+      flex: 1,
+    },
+    landscapeSpace: {
+      flexGrow: 1,
+      minHeight: 8,
+    },
     shortcuts: {
       flexDirection: 'row',
       gap: 8,
@@ -173,21 +184,22 @@ function makeStyles(c) {
     },
     shortcut: {
       flex: 1,
-      minHeight: Layout.buttonHeight,
+      minHeight: 64,
       borderRadius: Layout.buttonRadius,
       backgroundColor: c.white,
       borderWidth: 1,
       borderColor: c.searchBorder,
-      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: 6,
-      paddingHorizontal: 8,
+      gap: 4,
+      paddingVertical: 10,
+      paddingHorizontal: 4,
     },
     shortcutText: {
-      fontSize: 12,
+      fontSize: 11,
       fontWeight: '700',
       color: c.navy,
+      textAlign: 'center',
     },
     summary: {
       flexDirection: 'row',

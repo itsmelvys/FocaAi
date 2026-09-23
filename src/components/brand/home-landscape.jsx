@@ -36,8 +36,7 @@ export function HomeLandscape() {
 function makeStyles(c) {
   return {
     wrap: {
-      height: 130,
-      marginTop: 'auto',
+      height: 120,
     },
     sky: {
       ...StyleSheet.absoluteFillObject,

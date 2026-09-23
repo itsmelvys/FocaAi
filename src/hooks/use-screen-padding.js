@@ -9,7 +9,7 @@ export function useScreenPadding() {
     insets,
     top: insets.top + Layout.afterStatusBar,
     right: Math.max(insets.right, 0) + Layout.gutter,
-    bottom: insets.bottom + Layout.afterHomeIndicator,
+    bottom: Math.max(insets.bottom, Layout.afterHomeIndicator),
     left: Math.max(insets.left, 0) + Layout.gutter,
   };
 }

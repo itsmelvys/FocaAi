@@ -1,10 +1,8 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
 
 import { HomeLandscape } from '@/components/brand/home-landscape';
-import { BackButton } from '@/components/navigation/back-button';
 import { PlanSlotForm } from '@/components/planner/plan-slot-form';
 import { ScheduleItem } from '@/components/planner/schedule-item';
 import {
@@ -25,7 +23,6 @@ function sortBlocks(blocks) {
 }
 
 export default function PlannerScreen() {
-  const router = useRouter();
   const padding = useScreenPadding();
   const { colors } = useTheme();
   const styles = useThemedStyles(makeStyles);
@@ -83,7 +80,6 @@ export default function PlannerScreen() {
         <View style={styles.sun} />
         <View style={styles.birdOne} />
         <View style={styles.birdTwo} />
-        <BackButton onPress={() => router.navigate('/(app)')} />
         <View style={styles.titleRow}>
           <View style={styles.titleBlock}>
             <Text style={styles.title}>Meu planner</Text>
@@ -133,11 +129,12 @@ export default function PlannerScreen() {
       </View>
 
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={{
           flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 96,
+          paddingBottom: 88,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.dayHeader}>
@@ -161,7 +158,7 @@ export default function PlannerScreen() {
             <AppIcon
               name={{ ios: 'checkmark', android: 'check', web: 'check' }}
               size={16}
-              tintColor={colors.white}
+              tintColor={colors.onColor}
             />
           </View>
           <View style={styles.summaryBody}>
@@ -177,6 +174,7 @@ export default function PlannerScreen() {
           </View>
         </View>
 
+        <View style={styles.landscapeSpace} />
         <HomeLandscape />
         <Text style={styles.quote}>Disciplina hoje, conquistas amanhã. ❤️</Text>
       </ScrollView>
@@ -193,7 +191,7 @@ export default function PlannerScreen() {
         <AppIcon
           name={{ ios: 'plus', android: 'add', web: 'add' }}
           size={20}
-          tintColor={colors.white}
+          tintColor={colors.onColor}
         />
         <Text style={styles.fabText}>Planejar horário</Text>
       </Pressable>
@@ -208,6 +206,13 @@ function makeStyles(c) {
     screen: {
       flex: 1,
       backgroundColor: c.cream,
+    },
+    landscapeSpace: {
+      flexGrow: 1,
+      minHeight: 8,
+    },
+    scroll: {
+      flex: 1,
     },
     header: {
       paddingBottom: 8,

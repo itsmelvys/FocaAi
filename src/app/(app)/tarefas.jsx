@@ -4,7 +4,6 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { HomeLandscape } from '@/components/brand/home-landscape';
-import { BackButton } from '@/components/navigation/back-button';
 import { TaskCard } from '@/components/tarefas/task-card';
 import { Layout } from '@/constants/layout';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
@@ -56,7 +55,6 @@ export default function TarefasScreen() {
           },
         ]}>
         <View style={styles.sun} />
-        <BackButton onPress={() => router.navigate('/(app)')} />
         <View style={styles.titleRow}>
           <View style={styles.titleBlock}>
             <Text style={styles.title}>Minhas tarefas</Text>
@@ -70,7 +68,7 @@ export default function TarefasScreen() {
             <AppIcon
               name={{ ios: 'plus', android: 'add', web: 'add' }}
               size={20}
-              tintColor={colors.white}
+              tintColor={colors.onColor}
             />
           </Pressable>
         </View>
@@ -91,11 +89,12 @@ export default function TarefasScreen() {
       </View>
 
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={{
           flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 8,
+          paddingBottom: 4,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.summary}>
@@ -103,7 +102,7 @@ export default function TarefasScreen() {
             <AppIcon
               name={{ ios: 'checkmark', android: 'check', web: 'check' }}
               size={16}
-              tintColor={colors.white}
+              tintColor={colors.onColor}
             />
           </View>
           <View style={styles.summaryBody}>
@@ -127,6 +126,7 @@ export default function TarefasScreen() {
 
         {visibleTasks.length === 0 ? <Text style={styles.empty}>{emptyLabel}</Text> : null}
 
+        <View style={styles.landscapeSpace} />
         <HomeLandscape />
       </ScrollView>
     </View>
@@ -138,6 +138,13 @@ function makeStyles(c) {
     screen: {
       flex: 1,
       backgroundColor: c.cream,
+    },
+    scroll: {
+      flex: 1,
+    },
+    landscapeSpace: {
+      flexGrow: 1,
+      minHeight: 8,
     },
     header: {
       paddingBottom: 8,

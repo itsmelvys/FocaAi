@@ -1,9 +1,8 @@
-import { useRouter } from 'expo-router';
 import { AppIcon } from '@/components/ui/app-icon';
 import { Image, Pressable, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 
 import { Layout } from '@/constants/layout';
-import { BackButton } from '@/components/navigation/back-button';
 import { useAuth } from '@/hooks/use-auth';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
 import { useTheme, useThemedStyles } from '@/hooks/use-theme';
@@ -39,7 +38,6 @@ export function HomeHeader({ onBellPress }) {
       ]}>
       <View style={styles.sun} />
       <View style={styles.cloud} />
-      <BackButton onPress={() => router.replace('/login')} />
 
       <View style={styles.row}>
         <Pressable
@@ -138,8 +136,8 @@ function makeStyles(c) {
       paddingRight: 4,
     },
     hello: {
-      fontSize: 24,
-      lineHeight: 30,
+      fontSize: 22,
+      lineHeight: 28,
       fontWeight: '800',
       color: c.navy,
     },

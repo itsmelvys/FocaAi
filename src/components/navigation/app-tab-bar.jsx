@@ -82,16 +82,17 @@ export function AppTabBar({ state, navigation }) {
         {
           paddingTop: Layout.tabBarTop,
           paddingBottom: padding.bottom,
-          paddingLeft: padding.insets.left + 8,
-          paddingRight: padding.insets.right + 8,
+          paddingLeft: padding.insets.left + 4,
+          paddingRight: padding.insets.right + 4,
         },
       ]}>
-      {state.routes.map((route, index) => {
-        const tab = TABS.find((item) => item.name === route.name);
-        if (!tab) {
+      {TABS.map((tab) => {
+        const index = state.routes.findIndex((route) => route.name === tab.name);
+        if (index < 0) {
           return null;
         }
 
+        const route = state.routes[index];
         const focused = state.index === index;
 
         return (

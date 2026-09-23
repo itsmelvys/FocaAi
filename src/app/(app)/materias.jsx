@@ -1,13 +1,11 @@
 import { AppIcon } from '@/components/ui/app-icon';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { useRouter } from 'expo-router';
 
 import { HomeLandscape } from '@/components/brand/home-landscape';
 import { AddSubjectForm } from '@/components/materias/add-subject-form';
 import { SubjectCard } from '@/components/materias/subject-card';
 import { SubjectDetail } from '@/components/materias/subject-detail';
-import { BackButton } from '@/components/navigation/back-button';
 import { Layout } from '@/constants/layout';
 import { SUBJECTS } from '@/constants/mock-subjects';
 import { useScreenPadding } from '@/hooks/use-screen-padding';
@@ -21,7 +19,6 @@ const FILTERS = [
 ];
 
 export default function MateriasScreen() {
-  const router = useRouter();
   const padding = useScreenPadding();
   const { colors } = useTheme();
   const styles = useThemedStyles(makeStyles);
@@ -110,7 +107,6 @@ export default function MateriasScreen() {
           },
         ]}>
         <View style={styles.sun} />
-        <BackButton onPress={() => router.navigate('/(app)')} />
         <View style={styles.titleRow}>
           <View style={styles.titleBlock}>
             <Text style={styles.title}>Matérias</Text>
@@ -133,11 +129,12 @@ export default function MateriasScreen() {
       </View>
 
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={{
           flexGrow: 1,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 24,
+          paddingBottom: 4,
         }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}>
@@ -190,6 +187,7 @@ export default function MateriasScreen() {
         </View>
         <View style={styles.quoteLine} />
 
+        <View style={styles.landscapeSpace} />
         <HomeLandscape />
       </ScrollView>
 
@@ -217,6 +215,13 @@ function makeStyles(c) {
     screen: {
       flex: 1,
       backgroundColor: c.cream,
+    },
+    scroll: {
+      flex: 1,
+    },
+    landscapeSpace: {
+      flexGrow: 1,
+      minHeight: 8,
     },
     header: {
       paddingBottom: 12,

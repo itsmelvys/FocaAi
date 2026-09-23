@@ -4,7 +4,6 @@ import { Pressable, ScrollView, StyleSheet, Text, View, Image } from 'react-nati
 import { useRouter } from 'expo-router';
 
 import { HomeLandscape } from '@/components/brand/home-landscape';
-import { BackButton } from '@/components/navigation/back-button';
 import { EditProfileForm } from '@/components/perfil/edit-profile-form';
 import { PhotoPicker } from '@/components/perfil/photo-picker';
 import { ProfileRow } from '@/components/perfil/profile-row';
@@ -108,18 +107,18 @@ export default function PerfilScreen() {
   return (
     <View style={styles.screen}>
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={{
           flexGrow: 1,
           paddingTop: padding.top,
           paddingLeft: padding.left,
           paddingRight: padding.right,
-          paddingBottom: 8,
+          paddingBottom: 4,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.sun} />
           <View style={styles.cloud} />
-          <BackButton onPress={() => router.navigate('/(app)')} />
           <View style={styles.titleRow}>
             <View style={styles.titleBlock}>
               <Text style={styles.title}>Perfil</Text>
@@ -225,6 +224,7 @@ export default function PerfilScreen() {
           <Text style={styles.footerQuote}>Grandes planos começam com pequenos passos! ♡</Text>
         </View>
 
+        <View style={styles.landscapeSpace} />
         <HomeLandscape />
       </ScrollView>
 
@@ -258,6 +258,13 @@ function makeStyles(c) {
     screen: {
       flex: 1,
       backgroundColor: c.cream,
+    },
+    scroll: {
+      flex: 1,
+    },
+    landscapeSpace: {
+      flexGrow: 1,
+      minHeight: 8,
     },
     header: {
       overflow: 'hidden',
