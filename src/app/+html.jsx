@@ -8,6 +8,9 @@ export default function Html({ children }) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
         />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
       </head>
       <body style={{ height: '100%', margin: 0, overflow: 'hidden' }}>{children}</body>
     </html>
